@@ -17,6 +17,7 @@ class Kamers:
         # (x-pos, y-pos, breedte, hoogte, afbeelding_naam)  
 
         afbeeldingen_folder = pathlib.Path("afbeeldingen")
+        self.potten = [Items(145,207,36,36, afbeeldingen_folder / "pot.PNG"), Items(145,303,36,36, afbeeldingen_folder / "pot.PNG")]
         self.pot_1 = Items(145,207,36,36, afbeeldingen_folder / "pot.PNG")
         self.pot_2 = Items(145,303,36,36, afbeeldingen_folder / "pot.PNG")
         self.pot_3 = Items(145,399,36,36, afbeeldingen_folder / "pot.PNG")

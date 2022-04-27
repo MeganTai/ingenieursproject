@@ -42,7 +42,7 @@ class World:
         self.eindcode_2_gevonden = False
         self.eindcode_3_gevonden = False
         self.eindcode_4_gevonden = False
-
+        self.special_monalisa = None
         
     def act(self):
         event = pygame.event.wait()
@@ -97,6 +97,11 @@ class World:
             #       (niet mogelijk om 1 grote tekst op meerdere lijnen te zetten, dus moeten we meerdere teksten onder elkaar zetten
             #   zet alles in de groep: self.big_text_sprites door: [self.big_text_sprites.(  hier de texten inzetten  )]
             
+            for pot in self.kamer_1.potten:
+                if pot.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.text_mode = True
+                    self.text = Tekst("   een pot... zit er iets in?",0,1)
+
             if self.kamer_1.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text_mode = True
                 self.text = Tekst("   een pot... zit er iets in?",0,1)
@@ -140,7 +145,7 @@ class World:
                         self.inventory_slot_1.wordt_gebruikt = False
                         self.kamer_1.hamer.rect.topleft = (563,82)
                         self.text_mode = True
-                        self.text = Tekst("")
+                        self.text = Tekst("",0,1)
                     if self.kamer_1.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
                         self.kamer_1.pot_1.afbeelding = "afbeeldingen/gebroken_pot.PNG"
                         self.kamer_1.pot_1.image = pygame.image.load(self.kamer_1.pot_1.afbeelding)
@@ -207,7 +212,7 @@ class World:
                         self.text = Tekst("   de kast is nu open!",0,1)
                         self.open_kast = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "groene_kast.PNG")
                         self.popup_sprites.add(self.open_kast)
-                        self.special_monalisa = Items(255,355,55,60, afbeeldingen_folder / "mona_lisa.PNG")
+                        self.special_monalisa = Items(255,355,55,60, pathlib.Path("afbeeldingen") / "mona_lisa.PNG")
                         self.special_sprites.add(self.special_monalisa)
                                   
             if self.kamer_1.pc.rect.collidepoint(pygame.mouse.get_pos()):                   
@@ -230,14 +235,15 @@ class World:
                 self.sterrennacht_gezien = True 
 
             # Schilderij Mona Lisa in de kast
-            if self.kamer_1.monalisa.rect.collidepoint(pygame.mouse.get_pos()):
-                self.open_portret_monalisa = Items_popup(73,45,400, 510, pathlib.Path("afbeeldingen") / "mona_lisa.PNG")
-                self.popup_sprites.add(self.open_portret_monalisa)
-                self.monalisa_gezien = True
-                # Special sprites verwijderen
-                for sprite in self.special_sprites.sprites():
-                    self.special_sprites.remove(sprite) 
-            
+            if self.special_monalisa is not None:
+                if self.special_monalisa.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.open_portret_monalisa = Items_popup(73,45,400, 510, pathlib.Path("afbeeldingen") / "mona_lisa.PNG")
+                    self.popup_sprites.add(self.open_portret_monalisa)
+                    self.monalisa_gezien = True
+                    # Special sprites verwijderen
+                    for sprite in self.special_sprites.sprites():
+                        self.special_sprites.remove(sprite) 
+
             # Open boek met stuk eindcode voor speler
             if self.kamer_1.boek.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text_mode = True
@@ -259,8 +265,9 @@ class World:
                 for sprite in self.popup_sprites.sprites():
                     self.popup_sprites.remove(sprite) 
                 for sprite in self.special_sprites.sprites():
-                    self.special_sprites.remove(sprite)  
-                    self.special_sprites.kill() 
+                    self.special_sprites.remove(sprite)
+                    self.special_monalisa = None
+                    #self.special_sprites.kill() 
 
 
     def space_bar(self):
