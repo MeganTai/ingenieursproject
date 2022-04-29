@@ -15,9 +15,14 @@ class World:
     def __init__(self):
         DIM = 800
         self.DISPLAYSURF = pygame.display.set_mode((DIM, DIM * 3 // 4))
-        self.background = pygame.image.load("afbeeldingen/achtergrond_kamer_1.png")
+        
         #self.background = pygame.transform.scale(self.background, (750, 650))
         self.kamer_1 = Kamers("bureau")
+        self.living = Kamers("living")
+        self.gang = Kamers("gang")
+
+        self.background = self.kamer_1.background
+
         self.big_text_sprites = pygame.sprite.Group()
         self.text = Tekst("",0,1)
         self.big_text1 = Tekst("Er zijn 2 soorten teksten, een die hier staat",1,1)
@@ -50,22 +55,36 @@ class World:
         self.DISPLAYSURF.blit(self.background, (0, 0))
         self.inventory_sprites.draw(self.DISPLAYSURF)
         self.kamer_1.bureau_sprites.draw(self.DISPLAYSURF)
+        #self.living.living_sprites.draw(self.DISPLAYSURF)
+        #self.gang.gang_sprites.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
-        if self.inventory_slot_1.wordt_gebruikt == True:
-            self.kamer_1.hamer.rect.topleft = pygame.mouse.get_pos()
-        if self.inventory_slot_2.wordt_gebruikt == True:
-            self.kamer_1.sleutel.rect.topleft = pygame.mouse.get_pos()
+        #if self.inventory_slot_1.wordt_gebruikt == True:
+        #    self.kamer_1.hamer.rect.topleft = pygame.mouse.get_pos()
+        #if self.inventory_slot_2.wordt_gebruikt == True:
+        #    self.kamer_1.sleutel.rect.topleft = pygame.mouse.get_pos()
                
-        if self.text_mode == True:
-            self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
-            self.DISPLAYSURF.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
-            for self.big_texts in self.big_text_sprites.sprites():
-                self.DISPLAYSURF.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
+        #if self.text_mode == True:
+        #    self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
+        #    self.DISPLAYSURF.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
+        #    for self.big_texts in self.big_text_sprites.sprites():
+        #        self.DISPLAYSURF.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
 
         
     def mouse_action(self):
         for sprite in self.kamer_1.bureau_sprites.sprites():
+            if sprite.rect.collidepoint(pygame.mouse.get_pos()):
+                Kamers.grow(self,sprite)
+            else:
+                Kamers.shrink(self,sprite)
+
+        for sprite in self.living.living_sprites.sprites():
+            if sprite.rect.collidepoint(pygame.mouse.get_pos()):
+                Kamers.grow(self,sprite)
+            else:
+                Kamers.shrink(self,sprite)
+
+        for sprite in self.gang.gang_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Kamers.grow(self,sprite)
             else:
