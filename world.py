@@ -32,13 +32,8 @@ class World:
         self.inventory_sprites = pygame.sprite.Group()
         self.popup_sprites = pygame.sprite.Group()
         self.inventory_space = Inventory(528,41,107,522,(153,0,0),0,True,False)
-        self.inventory_slot_1 = Inventory(544, 57,75,75,(102,51,0),1,False,False)
-        self.inventory_slot_2 = Inventory(544,140,75,75,(102,51,0),2,False,False)
-        self.inventory_slot_3 = Inventory(544,223,75,75,(102,51,0),3,False,False)
-        self.inventory_slot_4 = Inventory(544,306,75,75,(102,51,0),4,False,False)
-        self.inventory_slot_5 = Inventory(544,389,75,75,(102,51,0),5,False,False)
-        self.inventory_slot_6 = Inventory(544,472,75,75,(102,51,0),6,False,False)
-        self.inventory_sprites.add(self.inventory_space,self.inventory_slot_1,self.inventory_slot_2,self.inventory_slot_3,self.inventory_slot_4,self.inventory_slot_5,self.inventory_slot_6)
+        self.inventory_slots = [Inventory(544, 57,75,75,(102,51,0),1,False,False), Inventory(544,140,75,75,(102,51,0),2,False,False), Inventory(544,223,75,75,(102,51,0),3,False,False), Inventory(544,306,75,75,(102,51,0),4,False,False), Inventory(544,389,75,75,(102,51,0),5,False,False), Inventory(544,472,75,75,(102,51,0),6,False,False)]
+        self.inventory_sprites.add(self.inventory_space,self.inventory_slots)
         self.monalisa_gezien = False
         self.sterrennacht_gezien = False
         self.special_sprites = pygame.sprite.Group()
@@ -115,18 +110,49 @@ class World:
             #       (niet mogelijk om 1 grote tekst op meerdere lijnen te zetten, dus moeten we meerdere teksten onder elkaar zetten
             #   zet alles in de groep: self.big_text_sprites door: [self.big_text_sprites.(  hier de texten inzetten  )]
             
+            if self.inventory_space.rect.collidepoint(pygame.mouse.get_pos()):
+                for slot in self.inventory_slots:
+                    if slots.rect.collidepoint(pygame.mouse.get_pos()):
+                        if slot.in_use:
+                            for slots in self.inventory_slots:
+                                self.wordt_gebruikt = False
+                            slot.wordt_gebruikt = True
+
+
             for pot in self.bureau.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
-                    if pot.afbeelding == "afbeeldingen\pot.PNG":
-                        if pot == self.bureau.potten[4]:
-                            self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
-                        else:
-                            self.text = Tekst("   een pot... zit er iets in?",0,1)
-                    if pot.afbeelding == "afbeeldingen\gebroken_pot.PNG":
-                        if pot == self.bureau.potten[4]:
-                            self.text = Tekst("   Er zat een sleutel in!",0,1)
-                        else:
-                            self.text = Tekst("   Er zat niks in.",0,1)
+                    if self.inventory_slots[0].wordt_gebruikt:
+                        if pot.afbeelding == "afbeeldingen\pot.PNG":
+                            if pot == self.bureau.potten[4]:
+                                pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                                pot.image = pygame.image.load(self.bureau.pot_5.afbeelding)
+                                pot.image = pygame.transform.scale(self.bureau.pot_5.image, (36,36))
+                                self.text = Tekst("   er zat een sleutel in de pot!",0,1)
+                                self.bureau.sleutel = Items(581,177,50,50, "afbeeldingen/sleutel.PNG")
+                                self.bureau.bureau_sprites.add(self.bureau.sleutel)
+                                self.inventory_slots[2].in_use = True
+                            else:
+                                pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                                pot.image = pygame.image.load(self.bureau.pot_1.afbeelding)
+                                pot.image = pygame.transform.scale(self.bureau.pot_1.image, (36,36))
+                                self.text = Tekst("   er was niks in de pot",0,1)
+
+                        if pot.afbeelding == "afbeeldingen\gebroken_pot.PNG":
+                            if pot == self.bureau.potten[4]:
+                                self.text = Tekst("   Er zat een sleutel in!",0,1)
+                            else:
+                                self.text = Tekst("   Er zat niks in.",0,1)
+                    else:
+                        if pot.afbeelding == "afbeeldingen\pot.PNG":
+                            if pot == self.bureau.potten[4]:
+                                self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
+                            else:
+                                self.text = Tekst("   een pot... zit er iets in?",0,1)
+                        if pot.afbeelding == "afbeeldingen\gebroken_pot.PNG":
+                            if pot == self.bureau.potten[4]:
+                                self.text = Tekst("   Er zat een sleutel in!",0,1)
+                            else:
+                                self.text = Tekst("   Er zat niks in.",0,1)
 
             
 
@@ -152,44 +178,8 @@ class World:
                         self.bureau.hamer.rect.topleft = (563,82)
             
                         self.text = Tekst("",0,1)
-                    if self.bureau.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_1.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_1.image = pygame.image.load(self.bureau.pot_1.afbeelding)
-                        self.bureau.pot_1.image = pygame.transform.scale(self.bureau.pot_1.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_2.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_2.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_2.image = pygame.image.load(self.bureau.pot_2.afbeelding)
-                        self.bureau.pot_2.image = pygame.transform.scale(self.bureau.pot_2.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_3.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_3.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_3.image = pygame.image.load(self.bureau.pot_3.afbeelding)
-                        self.bureau.pot_3.image = pygame.transform.scale(self.bureau.pot_3.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_4.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_4.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_4.image = pygame.image.load(self.bureau.pot_4.afbeelding)
-                        self.bureau.pot_4.image = pygame.transform.scale(self.bureau.pot_4.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_6.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_6.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_6.image = pygame.image.load(self.bureau.pot_6.afbeelding)
-                        self.bureau.pot_6.image = pygame.transform.scale(self.bureau.pot_6.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_7.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_7.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_7.image = pygame.image.load(self.bureau.pot_7.afbeelding)
-                        self.bureau.pot_7.image = pygame.transform.scale(self.bureau.pot_7.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_5.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_5.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_5.image = pygame.image.load(self.bureau.pot_5.afbeelding)
-                        self.bureau.pot_5.image = pygame.transform.scale(self.bureau.pot_5.image, (36,36))
-                        self.text = Tekst("   er zat een sleutel in de pot!",0,1)
-                        self.bureau.sleutel = Items(581,177,50,50, "afbeeldingen/sleutel.PNG")
-                        self.bureau.bureau_sprites.add(self.bureau.sleutel)
-                        self.inventory_slot_2.in_use = True
+
+
                     
             if self.inventory_slot_2.in_use == False:
                 if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
