@@ -33,7 +33,7 @@ class Kamers:
         self.bureau_sprites.add(self.potten, self.pc, self.boek, self.portret, self.hamer, self.vuilbak, self.kast, self.pijl_down)
 
     def gang(self):
-        self.background = pygame.image.load("gang_afbeeldingen\gang_achtergrond.PNG")
+        self.background = pygame.image.load("gang_afbeeldingen/gang_achtergrond.PNG")
         # 5 sprites : 2 deuren, 1 kast, 1 spiegel, 1 tablet  
         self.gang_sprites = pygame.sprite.Group()
         
@@ -53,7 +53,7 @@ class Kamers:
 
 
     def living(self):
-        self.background = pygame.image.load("living_afbeeldingen\living_achtergrond.PNG")
+        self.background = pygame.image.load("living_afbeeldingen/living_achtergrond.PNG")
         # 5 sprites : 1 boekelade, 1 boekenkast, 1 kast, 1 tv, 1 open haard  
         self.living_sprites = pygame.sprite.Group()
         
