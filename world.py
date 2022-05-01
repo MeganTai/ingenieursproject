@@ -37,10 +37,7 @@ class World:
         self.monalisa_gezien = False
         self.sterrennacht_gezien = False
         self.special_sprites = pygame.sprite.Group()
-        self.eindcode_1_gevonden = False
-        self.eindcode_2_gevonden = False
-        self.eindcode_3_gevonden = False
-        self.eindcode_4_gevonden = False
+        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
         self.special_monalisa = None
         
     def act(self):
