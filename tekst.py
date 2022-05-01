@@ -22,7 +22,5 @@ class Tekst(pygame.sprite.Sprite):
             self.text_sprite.rect = self.text_sprite.image.get_rect()
             self.text_sprite.text = self.font.render(string,True, zwart, grijs)
             self.text_sprite.rect.topleft = (50,500 + line*25)
-
-    
         
-     
+        self.mode = True

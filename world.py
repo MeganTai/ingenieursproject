@@ -29,7 +29,6 @@ class World:
         self.big_text2 = Tekst("en een die de muis volgt. om beide te laten",1,2)
         self.big_text3 = Tekst("verdwijnen: druk spatie_bar",1,3)
         self.big_text_sprites.add(self.big_text1,self.big_text2,self.big_text3)
-        self.text_mode = True
         self.inventory_sprites = pygame.sprite.Group()
         self.popup_sprites = pygame.sprite.Group()
         self.inventory_space = Inventory(528,41,107,522,(153,0,0),0,True,False)
@@ -59,16 +58,16 @@ class World:
         #self.gang.gang_sprites.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
-        #if self.inventory_slot_1.wordt_gebruikt == True:
-        #    self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
-        #if self.inventory_slot_2.wordt_gebruikt == True:
-        #    self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slot_1.wordt_gebruikt == True:
+            self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slot_2.wordt_gebruikt == True:
+            self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
                
-        #if self.text_mode == True:
-        #    self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
-        #    self.DISPLAYSURF.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
-        #    for self.big_texts in self.big_text_sprites.sprites():
-        #        self.DISPLAYSURF.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
+        if self.text.mode == True:
+            self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
+            self.DISPLAYSURF.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
+            for self.big_texts in self.big_text_sprites.sprites():
+                self.DISPLAYSURF.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
 
         
     def mouse_action(self):
@@ -118,52 +117,40 @@ class World:
             
             for pot in self.bureau.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text_mode = True
-                    self.text = Tekst("   een pot... zit er iets in?",0,1)
+                    if pot.afbeelding == "afbeeldingen\pot.PNG":
+                        if pot == self.bureau.potten[4]:
+                            self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
+                        else:
+                            self.text = Tekst("   een pot... zit er iets in?",0,1)
+                    if pot.afbeelding == "afbeeldingen\gebroken_pot.PNG":
+                        if pot == self.bureau.potten[4]:
+                            self.text = Tekst("   Er zat een sleutel in!",0,1)
+                        else:
+                            self.text = Tekst("   Er zat niks in.",0,1)
 
-            if self.bureau.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)
-            if self.bureau.pot_2.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1) 
-            if self.bureau.pot_3.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)
-            if self.bureau.pot_4.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)           
-            if self.bureau.pot_5.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
-            if self.bureau.pot_6.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1) 
-            if self.bureau.pot_7.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)
+            
 
             if self.bureau.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
+    
                 self.text = Tekst("   klik op de vuilbak om jouw huidige voorwerp los te laten",0,1)
             
             if self.inventory_slot_1.in_use == False:
                 if self.bureau.hamer.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text_mode = True
+        
                     self.text = Tekst("   een hamer, kan van pas komen.",0,1)
                     self.inventory_slot_1.in_use = True
                     self.bureau.hamer.rect.topleft = (563,82)
             if self.inventory_slot_1.in_use == True:
                 if self.inventory_slot_1.wordt_gebruikt == False:
                     if self.inventory_slot_1.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.text_mode = True
+            
                         self.text = Tekst("   een hamer, kan van pas komen.",0,1)
                         self.inventory_slot_1.wordt_gebruikt = True
                 if self.inventory_slot_1.wordt_gebruikt == True:
                     if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
                         self.inventory_slot_1.wordt_gebruikt = False
                         self.bureau.hamer.rect.topleft = (563,82)
-                        self.text_mode = True
+            
                         self.text = Tekst("",0,1)
                     if self.bureau.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
                         self.bureau.pot_1.afbeelding = "afbeeldingen/gebroken_pot.PNG"
@@ -206,28 +193,28 @@ class World:
                     
             if self.inventory_slot_2.in_use == False:
                 if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text_mode = True
+        
                     self.text = Tekst("   de kast is op slot",0,1)
 
             if self.inventory_slot_2.in_use == True:
                 if self.inventory_slot_2.wordt_gebruikt == False:
                     if self.inventory_slot_2.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.text_mode = True
+            
                         self.text = Tekst("   waar dient deze sleutel voor?",0,1)
                         self.inventory_slot_2.wordt_gebruikt = True
                     if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.text_mode = True
+            
                         self.text = Tekst("   misschien kunnen we de sleutel gebruiken?",0,1)
                 if self.inventory_slot_2.wordt_gebruikt == True:
                     if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
                         self.inventory_slot_2.wordt_gebruikt = False
                         self.bureau.sleutel.rect.center = (581,177)
-                        self.text_mode = True
+            
                         self.text = Tekst("",0,1)
                     if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
                         self.inventory_slot_2.wordt_gebruikt = False
                         self.bureau.sleutel.rect.center = (581,177)
-                        self.text_mode = True
+            
                         self.text = Tekst("   de kast is nu open!",0,1)
                         self.open_kast = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "groene_kast.PNG")
                         self.popup_sprites.add(self.open_kast)
@@ -235,7 +222,7 @@ class World:
                         self.special_sprites.add(self.special_monalisa)
                                   
             if self.bureau.pc.rect.collidepoint(pygame.mouse.get_pos()):                   
-                self.text_mode = True
+    
                 self.big_text = Tekst("voer de 2 geboortejaren in van de 2 schilders",1,1)
                 self.big_text_sprites.add(self.big_text)
                 self.open_pc = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "computerscherm.PNG")
@@ -246,7 +233,7 @@ class World:
             
             # Schilderij Sterrennacht aan de muur
             if self.bureau.portret.rect.collidepoint(pygame.mouse.get_pos()):                   
-                self.text_mode = True
+    
                 self.big_text = Tekst("wat is het geboortejaar van deze schilder?",1,1)
                 self.big_text_sprites.add(self.big_text)
                 self.open_portret_sterrennacht = Items_popup(70,150,400, 300, pathlib.Path("afbeeldingen") / "sterrennacht.PNG")
@@ -265,14 +252,14 @@ class World:
 
             # Open boek met stuk eindcode voor speler
             if self.bureau.boek.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
+    
                 self.big_text = Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1)
                 self.big_text_sprites.add(self.big_text)
                 self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
                 self.popup_sprites.add(self.open_boek)
                 
                 if self.open_boek.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text_mode = True
+        
                     self.big_text = Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1)
                     self.big_text_sprites.add(self.big_text)
                     self.special_eindcode_1 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
@@ -290,7 +277,7 @@ class World:
 
 
     def space_bar(self):
-        self.text_mode = False
+        self.text.mode = False
         self.text = Tekst("",0,1)
         for text in self.big_text_sprites.sprites():
             self.big_text_sprites.remove(text)
