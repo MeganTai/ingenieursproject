@@ -167,7 +167,7 @@ class World:
                         self.text = Tekst("   een hamer, kan van pas komen.",0,1)
                         self.inventory_slots[0].in_use = True
                 if self.inventory_slots[0].in_use == True:
-                    if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
+                    if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
                         self.inventory_slots[0].in_use = False
                         self.bureau.hamer.rect.topleft = (563,82)
             
@@ -188,7 +188,7 @@ class World:
             
                         self.text = Tekst("   misschien kunnen we de sleutel gebruiken?",0,1)
                 if self.inventory_slots[1].in_use == True:
-                    if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
+                    if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
                         self.inventory_slots[1].in_use = False
                         self.bureau.sleutel.rect.center = (581,177)
             
@@ -249,7 +249,7 @@ class World:
                     self.eindcode_1_gevonden = True
        
             # Vuilbak rechts benedenhoek 
-            if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
+            if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
                 for sprite in self.popup_sprites.sprites():
                     self.popup_sprites.remove(sprite) 
                 for sprite in self.special_sprites.sprites():
