@@ -274,7 +274,9 @@ class World:
                     self.special_sprites.remove(sprite)
                     self.special_monalisa = None
                     #self.special_sprites.kill() 
-
+            
+            if self.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
+                self.text = Tekst("   Terug naar de gang", 0, 1)
 
     def space_bar(self):
         self.text.mode = False
