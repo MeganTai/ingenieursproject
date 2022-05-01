@@ -118,7 +118,7 @@ class World:
             for pot in self.bureau.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
                     if self.inventory_slots[0].in_use:
-                        if pot.afbeelding == "afbeeldingen\pot.PNG":
+                        if pot.afbeelding == "afbeeldingen/pot.PNG":
                             if pot == self.bureau.potten[4]:
                                 pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
                                 pot.image = pygame.image.load(self.bureau.pot_5.afbeelding)
@@ -133,18 +133,18 @@ class World:
                                 pot.image = pygame.transform.scale(self.bureau.pot_1.image, (36,36))
                                 self.text = Tekst("   er was niks in de pot",0,1)
 
-                        if pot.afbeelding == "afbeeldingen\gebroken_pot.PNG":
+                        if pot.afbeelding == "afbeeldingen/gebroken_pot.PNG":
                             if pot == self.bureau.potten[4]:
                                 self.text = Tekst("   Er zat een sleutel in!",0,1)
                             else:
                                 self.text = Tekst("   Er zat niks in.",0,1)
                     else:
-                        if pot.afbeelding == "afbeeldingen\pot.PNG":
+                        if pot.afbeelding == "afbeeldingen/pot.PNG":
                             if pot == self.bureau.potten[4]:
                                 self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
                             else:
                                 self.text = Tekst("   een pot... zit er iets in?",0,1)
-                        if pot.afbeelding == "afbeeldingen\gebroken_pot.PNG":
+                        if pot.afbeelding == "afbeeldingen/gebroken_pot.PNG":
                             if pot == self.bureau.potten[4]:
                                 self.text = Tekst("   Er zat een sleutel in!",0,1)
                             else:
