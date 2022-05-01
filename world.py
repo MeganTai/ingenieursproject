@@ -50,9 +50,9 @@ class World:
         #self.gang.gang_sprites.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
-        if self.inventory_slot_1.wordt_gebruikt == True:
+        if self.inventory_slot_1.in_use == True:
             self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
-        if self.inventory_slot_2.wordt_gebruikt == True:
+        if self.inventory_slot_2.in_use == True:
             self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
                
         if self.text.mode == True:
@@ -112,13 +112,13 @@ class World:
                     if slots.rect.collidepoint(pygame.mouse.get_pos()):
                         if slot.in_use:
                             for slots in self.inventory_slots:
-                                self.wordt_gebruikt = False
-                            slot.wordt_gebruikt = True
+                                self.in_use = False
+                            slot.in_use = True
 
 
             for pot in self.bureau.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
-                    if self.inventory_slots[0].wordt_gebruikt:
+                    if self.inventory_slots[0].in_use:
                         if pot.afbeelding == "afbeeldingen\pot.PNG":
                             if pot == self.bureau.potten[4]:
                                 pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
@@ -151,8 +151,6 @@ class World:
                             else:
                                 self.text = Tekst("   Er zat niks in.",0,1)
 
-            
-
             if self.bureau.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
     
                 self.text = Tekst("   klik op de vuilbak om jouw huidige voorwerp los te laten",0,1)
@@ -164,14 +162,14 @@ class World:
                     self.inventory_slot_1.in_use = True
                     self.bureau.hamer.rect.topleft = (563,82)
             if self.inventory_slot_1.in_use == True:
-                if self.inventory_slot_1.wordt_gebruikt == False:
+                if self.inventory_slot_1.in_use == False:
                     if self.inventory_slot_1.rect.collidepoint(pygame.mouse.get_pos()):
             
                         self.text = Tekst("   een hamer, kan van pas komen.",0,1)
-                        self.inventory_slot_1.wordt_gebruikt = True
-                if self.inventory_slot_1.wordt_gebruikt == True:
+                        self.inventory_slot_1.in_use = True
+                if self.inventory_slot_1.in_use == True:
                     if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.inventory_slot_1.wordt_gebruikt = False
+                        self.inventory_slot_1.in_use = False
                         self.bureau.hamer.rect.topleft = (563,82)
             
                         self.text = Tekst("",0,1)
@@ -184,22 +182,22 @@ class World:
                     self.text = Tekst("   de kast is op slot",0,1)
 
             if self.inventory_slot_2.in_use == True:
-                if self.inventory_slot_2.wordt_gebruikt == False:
+                if self.inventory_slot_2.in_use == False:
                     if self.inventory_slot_2.rect.collidepoint(pygame.mouse.get_pos()):
             
                         self.text = Tekst("   waar dient deze sleutel voor?",0,1)
-                        self.inventory_slot_2.wordt_gebruikt = True
+                        self.inventory_slot_2.in_use = True
                     if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
             
                         self.text = Tekst("   misschien kunnen we de sleutel gebruiken?",0,1)
-                if self.inventory_slot_2.wordt_gebruikt == True:
+                if self.inventory_slot_2.in_use == True:
                     if self.inventory_slot_6.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.inventory_slot_2.wordt_gebruikt = False
+                        self.inventory_slot_2.in_use = False
                         self.bureau.sleutel.rect.center = (581,177)
             
                         self.text = Tekst("",0,1)
                     if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.inventory_slot_2.wordt_gebruikt = False
+                        self.inventory_slot_2.in_use = False
                         self.bureau.sleutel.rect.center = (581,177)
             
                         self.text = Tekst("   de kast is nu open!",0,1)
