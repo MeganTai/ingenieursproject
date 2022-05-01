@@ -59,10 +59,10 @@ class World:
         #self.gang.gang_sprites.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
-        #if self.inventory_slot_1.wordt_gebruikt == True:
-        #    self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
-        #if self.inventory_slot_2.wordt_gebruikt == True:
-        #    self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slot_1.wordt_gebruikt == True:
+            self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slot_2.wordt_gebruikt == True:
+            self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
                
         #if self.text_mode == True:
         #    self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
@@ -120,33 +120,37 @@ class World:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
                     self.text_mode = True
                     self.text = Tekst("   een pot... zit er iets in?",0,1)
-
-            if self.bureau.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)
-            if self.bureau.pot_2.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1) 
-            if self.bureau.pot_3.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)
-            if self.bureau.pot_4.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)           
+            
             if self.bureau.pot_5.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text_mode = True
                 self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
-            if self.bureau.pot_6.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1) 
-            if self.bureau.pot_7.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text_mode = True
-                self.text = Tekst("   een pot... zit er iets in?",0,1)
 
+            #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... zit er iets in?",0,1)
+            #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... zit er iets in?",0,1) 
+            #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... zit er iets in?",0,1)
+            #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... zit er iets in?",0,1)           
+            #if self.bureau.pot_5.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
+            #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... zit er iets in?",0,1) 
+            #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+            #    self.text_mode = True
+            #    self.text = Tekst("   een pot... zit er iets in?",0,1)
+            
             if self.bureau.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text_mode = True
                 self.text = Tekst("   klik op de vuilbak om jouw huidige voorwerp los te laten",0,1)
-            
+        
             if self.inventory_slot_1.in_use == False:
                 if self.bureau.hamer.rect.collidepoint(pygame.mouse.get_pos()):
                     self.text_mode = True
@@ -165,36 +169,45 @@ class World:
                         self.bureau.hamer.rect.topleft = (563,82)
                         self.text_mode = True
                         self.text = Tekst("",0,1)
-                    if self.bureau.pot_1.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_1.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_1.image = pygame.image.load(self.bureau.pot_1.afbeelding)
-                        self.bureau.pot_1.image = pygame.transform.scale(self.bureau.pot_1.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_2.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_2.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_2.image = pygame.image.load(self.bureau.pot_2.afbeelding)
-                        self.bureau.pot_2.image = pygame.transform.scale(self.bureau.pot_2.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_3.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_3.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_3.image = pygame.image.load(self.bureau.pot_3.afbeelding)
-                        self.bureau.pot_3.image = pygame.transform.scale(self.bureau.pot_3.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_4.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_4.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_4.image = pygame.image.load(self.bureau.pot_4.afbeelding)
-                        self.bureau.pot_4.image = pygame.transform.scale(self.bureau.pot_4.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_6.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_6.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_6.image = pygame.image.load(self.bureau.pot_6.afbeelding)
-                        self.bureau.pot_6.image = pygame.transform.scale(self.bureau.pot_6.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
-                    if self.bureau.pot_7.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.bureau.pot_7.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                        self.bureau.pot_7.image = pygame.image.load(self.bureau.pot_7.afbeelding)
-                        self.bureau.pot_7.image = pygame.transform.scale(self.bureau.pot_7.image, (36,36))
-                        self.text = Tekst("   er was niks in de pot",0,1)
+
+                    # Megan 1/5
+                    for pot in self.bureau.potten:
+                        if pot.rect.collidepoint(pygame.mouse.get_pos()):
+                            self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                            self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                            self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                            self.text = Tekst("   er was niks in de pot",0,1)
+                            
+                    #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+                    #    self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                    #    self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                    #    self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                    #    self.text = Tekst("   er was niks in de pot",0,1)
+                    #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+                    #    self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                    #    self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                    #    self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                    #    self.text = Tekst("   er was niks in de pot",0,1)
+                    #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+                    #    self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                    #    self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                    #    self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                    #    self.text = Tekst("   er was niks in de pot",0,1)
+                    #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+                    #    self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                    #    self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                    #    self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                    #    self.text = Tekst("   er was niks in de pot",0,1)
+                    #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+                    #    self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                    #    self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                    #    self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                    #    self.text = Tekst("   er was niks in de pot",0,1)
+                    #if self.bureau.potten.rect.collidepoint(pygame.mouse.get_pos()):
+                    #    self.bureau.potten.afbeelding = "afbeeldingen/gebroken_pot.PNG"
+                    #    self.bureau.potten.image = pygame.image.load(self.bureau.potten.afbeelding)
+                    #    self.bureau.potten.image = pygame.transform.scale(self.bureau.potten.image, (36,36))
+                    #    self.text = Tekst("   er was niks in de pot",0,1)
                     if self.bureau.pot_5.rect.collidepoint(pygame.mouse.get_pos()):
                         self.bureau.pot_5.afbeelding = "afbeeldingen/gebroken_pot.PNG"
                         self.bureau.pot_5.image = pygame.image.load(self.bureau.pot_5.afbeelding)
