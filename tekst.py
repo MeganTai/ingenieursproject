@@ -23,4 +23,5 @@ class Tekst(pygame.sprite.Sprite):
             self.text_sprite.text = self.font.render(string,True, zwart, grijs)
             self.text_sprite.rect.topleft = (50,500 + line*25)
         
+        #hier op True zetten, in plaats in world, zorgt voor 1 lijn minder bij iedere text die we maken
         self.mode = True
