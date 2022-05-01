@@ -28,7 +28,7 @@ class Kamers:
         self.hamer = Items(386,399,24,42, afbeeldingen_folder / "hamer.PNG")
         self.vuilbak = Items(580, 510, 60, 60, afbeeldingen_folder / "vuilbak.PNG")
         self.kast = Items(98,183,48,96, afbeeldingen_folder / "kast.PNG")
-        self.pijl_down = Items(580, 200, 30, 30, afbeeldingen_folder / "pijl_down.PNG")
+        self.pijl_down = Items(225, 500, 50, 50, afbeeldingen_folder / "pijl_down.PNG")
         
         self.bureau_sprites.add(self.potten, self.pc, self.boek, self.portret, self.hamer, self.vuilbak, self.kast, self.pijl_down)
 
