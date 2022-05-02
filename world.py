@@ -259,6 +259,8 @@ class World:
             
             if self.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text = Tekst("   Terug naar de gang", 0, 1)
+                #exec(open('kamers.py').read())
+                #(gang openen)
 
     def space_bar(self):
         self.text.mode = False
