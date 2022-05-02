@@ -260,7 +260,6 @@ class World:
             
             if self.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text = Tekst("   Terug naar de gang", 0, 1)
-<<<<<<< HEAD
                 self.living = True
                 self.background = pygame.image.load("gang_afbeeldingen/gang_achtergrond.PNG") 
                 self.gang_sprites = pygame.sprite.Group()
@@ -270,12 +269,7 @@ class World:
                 self.kastje = Items(64,484,44,44, afbeeldingen_folder / "gereedschapkast.PNG")
                 self.spiegel = Items(324,224,48,78, afbeeldingen_folder / "spiegel.PNG")
                 self.tablet = Items(370,529,34,27, afbeeldingen_folder / "tablet.PNG")
-                
-=======
-                #exec(open('kamers.py').read())
-                #(gang openen)
-
->>>>>>> 8d8a5d3b530e195b9fd55229dc5122fe1f3d4eaf
+        
     def space_bar(self):
         self.text.mode = False
         self.text = Tekst("",0,1)
