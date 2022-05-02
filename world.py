@@ -47,7 +47,7 @@ class World:
         self.DISPLAYSURF.blit(self.background, (0, 0))
         self.inventory_sprites.draw(self.DISPLAYSURF)
         self.bureau.bureau_sprites.draw(self.DISPLAYSURF)
-        #self.living.living_sprites.draw(self.DISPLAYSURF)
+        self.living.living_sprites.draw(self.DISPLAYSURF)
         #self.gang.gang_sprites.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
