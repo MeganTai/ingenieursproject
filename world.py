@@ -42,7 +42,6 @@ class World:
         self.special_monalisa = None
         self.bureau_pijl = False
         
-        
     def act(self):
         event = pygame.event.wait()
 
