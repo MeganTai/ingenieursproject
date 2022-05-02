@@ -39,6 +39,7 @@ class World:
         self.special_sprites = pygame.sprite.Group()
         self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
         self.special_monalisa = None
+        self.kamer = False
         
     def act(self):
         event = pygame.event.wait()
@@ -259,7 +260,16 @@ class World:
             
             if self.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text = Tekst("   Terug naar de gang", 0, 1)
-
+                self.living = True
+                self.background = pygame.image.load("gang_afbeeldingen/gang_achtergrond.PNG") 
+                self.gang_sprites = pygame.sprite.Group()
+                afbeeldingen_folder = pathlib.Path("gang_afbeeldingen")
+                self.bureau_deur = Items(24,161,48,48, afbeeldingen_folder / "deur.PNG")
+                self.living_deur = Items(223,254,48,48, afbeeldingen_folder / "deur.PNG")
+                self.kastje = Items(64,484,44,44, afbeeldingen_folder / "gereedschapkast.PNG")
+                self.spiegel = Items(324,224,48,78, afbeeldingen_folder / "spiegel.PNG")
+                self.tablet = Items(370,529,34,27, afbeeldingen_folder / "tablet.PNG")
+                
     def space_bar(self):
         self.text.mode = False
         self.text = Tekst("",0,1)
