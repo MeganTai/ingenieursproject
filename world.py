@@ -33,22 +33,27 @@ class World:
         self.popup_sprites = pygame.sprite.Group()
         self.inventory_space = Inventory(528,41,107,522,(153,0,0),0,True,False)
         self.inventory_slots = [Inventory(544, 57,75,75,(102,51,0),1,False,False), Inventory(544,140,75,75,(102,51,0),2,False,False), Inventory(544,223,75,75,(102,51,0),3,False,False), Inventory(544,306,75,75,(102,51,0),4,False,False), Inventory(544,389,75,75,(102,51,0),5,False,False), Inventory(544,472,75,75,(102,51,0),6,False,False)]
-        self.inventory_sprites.add(self.inventory_space,self.inventory_slots)
+        self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
+        self.inventory_sprites.add(self.inventory_space,self.inventory_slots,self.vuilbak)
         self.monalisa_gezien = False
         self.sterrennacht_gezien = False
         self.special_sprites = pygame.sprite.Group()
         self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
         self.special_monalisa = None
-        self.kamer = False
+        self.bureau_pijl = False
+        
         
     def act(self):
         event = pygame.event.wait()
 
         self.DISPLAYSURF.blit(self.background, (0, 0))
         self.inventory_sprites.draw(self.DISPLAYSURF)
-        self.bureau.bureau_sprites.draw(self.DISPLAYSURF)
-        self.living.living_sprites.draw(self.DISPLAYSURF)
-        #self.gang.gang_sprites.draw(self.DISPLAYSURF)
+        if self.background == self.bureau.background:
+            self.bureau.bureau_sprites.draw(self.DISPLAYSURF)
+        if self.background == self.living.background:
+            self.living.living_sprites.draw(self.DISPLAYSURF)
+        if self.background == self.gang.background:
+            self.gang.gang_sprites.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
         if self.inventory_slots[0].in_use == True:
@@ -110,7 +115,7 @@ class World:
             
             if self.inventory_space.rect.collidepoint(pygame.mouse.get_pos()):
                 for slot in self.inventory_slots:
-                    if slots.rect.collidepoint(pygame.mouse.get_pos()):
+                    if slot.rect.collidepoint(pygame.mouse.get_pos()):
                         if slot.in_use:
                             for slots in self.inventory_slots:
                                 self.in_use = False
@@ -151,7 +156,7 @@ class World:
                             else:
                                 self.text = Tekst("   Er zat niks in.",0,1)
 
-            if self.bureau.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
+            if self.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
     
                 self.text = Tekst("   klik op de vuilbak om jouw huidige voorwerp los te laten",0,1)
      
@@ -260,15 +265,9 @@ class World:
             
             if self.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 self.text = Tekst("   Terug naar de gang", 0, 1)
-                self.living = True
-                self.background = pygame.image.load("gang_afbeeldingen/gang_achtergrond.PNG") 
-                self.gang_sprites = pygame.sprite.Group()
-                afbeeldingen_folder = pathlib.Path("gang_afbeeldingen")
-                self.bureau_deur = Items(24,161,48,48, afbeeldingen_folder / "deur.PNG")
-                self.living_deur = Items(223,254,48,48, afbeeldingen_folder / "deur.PNG")
-                self.kastje = Items(64,484,44,44, afbeeldingen_folder / "gereedschapkast.PNG")
-                self.spiegel = Items(324,224,48,78, afbeeldingen_folder / "spiegel.PNG")
-                self.tablet = Items(370,529,34,27, afbeeldingen_folder / "tablet.PNG")
+                self.bureau_pijl = True
+                self.background = self.gang.background 
+                
         
     def space_bar(self):
         self.text.mode = False
