@@ -17,7 +17,7 @@ class Bureau:
         self.bureau = Kamers("bureau")
 
     def sprite_vergroting(self):
-        for sprite in self.bureau.
+        for sprite in self.bureau.bureau_sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Kamers.grow(self,sprite)
             else:
