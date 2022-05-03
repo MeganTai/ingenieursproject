@@ -42,7 +42,9 @@ class World:
         self.livingsleutel = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
         self.key_card = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
         self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
+        #vergroot niet
         self.inventory_sprites.add(self.inventory_space,self.inventory_slots)
+        #vergroot wel
         self.inventory_items.add(self.vuilbak)
 
         self.special_sprites = pygame.sprite.Group()
@@ -53,7 +55,8 @@ class World:
         event = pygame.event.wait()
 
         self.DISPLAYSURF.blit(self.background, (0, 0))
-
+        
+        # achtergrond veranderen in aanwezige kamer
         if self.background == self.bureau.bureau.background:
             self.bureau.bureau.bureau_sprites.draw(self.DISPLAYSURF)
         elif self.background == self.living.background:

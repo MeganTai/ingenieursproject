@@ -54,8 +54,6 @@ class Kamers:
         
         self.gang_sprites.add(self.bureau_deur, self.living_deur, self.kastje, self.spiegel, self.tablet)
     
-
-
     def living(self):
         self.background = pygame.image.load("living_afbeeldingen/living_achtergrond.PNG")
         # 5 sprites : 1 boekelade, 1 boekenkast, 1 kast, 1 tv, 1 open haard  
@@ -71,7 +69,6 @@ class Kamers:
         self.kast = Items(321,189,43,86, afbeeldingen_folder / "kast.PNG")
         self.open_haard = Items(407,159,130,115, afbeeldingen_folder / "open_haard.PNG")
         self.tv = Items(199, 200, 55, 39, afbeeldingen_folder / "tv.PNG")
-        
         
         self.living_sprites.add(self.boekenlade, self.boekenkast, self.open_haard, self.tv, self.kast)
 
