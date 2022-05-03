@@ -16,55 +16,93 @@ class Bureau:
     def __init__(self):
         self.bureau = Kamers("bureau")
 
-    def sprite_vergroting(self,room):
-        for sprite in room.bureau.bureau_sprites.sprites():
+    def sprite_vergroting(self,room_loc):
+        for sprite in room_loc.bureau.bureau_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Kamers.grow(self,sprite)
             else:
                 Kamers.shrink(self,sprite)
 
-    def tekst_weergave(self,surface):
-        self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
-        surface.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
-        for self.big_texts in self.big_text_sprites.sprites():
-            surface.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
-        
-    def click_actie(self,room):
-        for pot in self.bureau.potten:
-                if pot.rect.collidepoint(pygame.mouse.get_pos()):
-                    if self.inventory_slots[0].in_use:
 
-                        if pot.afbeelding == "afbeeldingen/gebroken_pot.PNG":
-                            if pot == self.bureau.potten[4]:
-                                self.text = Tekst("   Er zat een sleutel in!",0,1)
+        
+        
+    def click_actie(self,room_loc):
+
+        #volledige programma voor de 7 potten
+        for pot in room_loc.bureau.potten:
+            if pot.rect.collidepoint(pygame.mouse.get_pos()):
+                    if self.inventory_slots[0].in_use:
+                        if str(pot.afbeelding) == "afbeeldingen/gebroken_pot.PNG":
+                            if pot == room_loc.bureau.potten[4]:
+                               self.text = Tekst("   Er zat een sleutel in!",0,1)
                             else:
                                 self.text = Tekst("   Er zat niks in.",0,1)
 
-                        if pot.afbeelding == "afbeeldingen/pot.PNG":
-                            if pot == self.bureau.potten[4]:
+                        if str(pot.afbeelding) == "afbeeldingen/pot.PNG":
+                            if pot == room_loc.bureau.potten[4]:
                                 pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                                pot.image = pygame.image.load(self.bureau.pot_5.afbeelding)
-                                pot.image = pygame.transform.scale(self.bureau.pot_5.image, (36,36))
+                                pot.image = pygame.image.load(room_loc.bureau.pot_5.afbeelding)
+                                pot.image = pygame.transform.scale(room_loc.bureau.pot_5.image, (36,36))
                                 self.text = Tekst("   er zat een sleutel in de pot!",0,1)
-                                self.bureau.sleutel = Items(581,177,50,50, "afbeeldingen/sleutel.PNG")
-                                self.bureau.bureau_sprites.add(self.bureau.sleutel)
-                                self.inventory_slots[2].in_use = True
+                                room_loc.bureau.sleutel = Items(581,177,50,50, "afbeeldingen/sleutel.PNG")
+                                room_loc.bureau.bureau_sprites.add(room_loc.bureau.sleutel)
+                                room_loc.inventory_slots[2].in_use = True
                             else:
                                 pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                                pot.image = pygame.image.load(self.bureau.pot_1.afbeelding)
-                                pot.image = pygame.transform.scale(self.bureau.pot_1.image, (36,36))
+                                pot.image = pygame.image.load(room_loc.bureau.pot_1.afbeelding)
+                                pot.image = pygame.transform.scale(room_loc.bureau.pot_1.image, (36,36))
                                 self.text = Tekst("   er was niks in de pot",0,1)
 
                     else:
-                        if pot.afbeelding == "afbeeldingen/gebroken_pot.PNG":
-                            if pot == self.bureau.potten[4]:
+                        if str(pot.afbeelding) == "afbeeldingen\gebroken_pot.PNG":
+                            if pot == room_loc.bureau.potten[4]:
                                 self.text = Tekst("   Er zat een sleutel in!",0,1)
                             else:
                                 self.text = Tekst("   Er zat niks in.",0,1)
-                            
-                        if pot.afbeelding == "afbeeldingen/pot.PNG":
-                            if pot == self.bureau.potten[4]:
+
+                        if str(pot.afbeelding) == "afbeeldingen\pot.PNG":
+                            if pot == room_loc.bureau.potten[4]:
                                 self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
                             else:
                                 self.text = Tekst("   een pot... zit er iets in?",0,1)
+            
+        # Schilderij Sterrennacht aan de muur
+        if room_loc.bureau.portret.rect.collidepoint(pygame.mouse.get_pos()):                   
+            self.big_text = Tekst("wat is het geboortejaar van deze schilder?",1,1)
+            self.big_text_sprites.add(self.big_text)
+            self.open_portret_sterrennacht = Items_popup(70,150,400, 300, pathlib.Path("afbeeldingen") / "sterrennacht.PNG")
+            self.popup_sprites.add(self.open_portret_sterrennacht)
+            room_loc.bureau.sterrennacht_gezien = True 
+        
+        # Open boek met stuk eindcode voor speler
+            if room_loc.bureau.boek.rect.collidepoint(pygame.mouse.get_pos()):
+    
+                self.big_text = Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1)
+                self.big_text_sprites.add(self.big_text)
+                self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
+                self.popup_sprites.add(self.open_boek)
+                
+                if self.open_boek.rect.collidepoint(pygame.mouse.get_pos()):
+        
+                    self.big_text = Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1)
+                    self.big_text_sprites.add(self.big_text)
+                    self.special_eindcode_1 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
+                    self.special_sprites.add(self.special_eindcode_1)
+                    self.eindcode_1_gevonden = True
+
+        # Schilderij Mona Lisa in de kast
+            if room_loc.bureau.special_monalisa is not None:
+                if room_loc.bureau.special_monalisa.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.open_portret_monalisa = Items_popup(73,45,400, 510, pathlib.Path("afbeeldingen") / "mona_lisa.PNG")
+                    self.popup_sprites.add(self.open_portret_monalisa)
+                    room_loc.bureau.monalisa_gezien = True
+                    # Special sprites verwijderen
+                    for sprite in self.special_sprites.sprites():
+                        self.special_sprites.remove(sprite)
+
+        #pijl naar gang
+            if room_loc.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.text = Tekst("   Terug naar de gang", 0, 1)
+                    room_loc.bureau.bureau_pijl = True
+                    self.background = self.gang.background               
                         

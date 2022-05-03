@@ -21,7 +21,7 @@ while True:
     pygame.display.update()
     for event in events:
         if event.type == QUIT:
-            pygame.quit()
+            pygame.quit() 
             sys.exit()
         if event.type == pygame.MOUSEMOTION:
             world.mouse_action()

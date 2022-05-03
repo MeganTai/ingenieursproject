@@ -31,6 +31,10 @@ class Kamers:
         self.pijl_down = Items(225, 500, 50, 50, afbeeldingen_folder / "pijl_down.PNG")
         
         self.bureau_sprites.add(self.potten, self.pc, self.boek, self.portret, self.hamer, self.kast, self.pijl_down)
+        self.monalisa_gezien = False
+        self.sterrennacht_gezien = False
+        self.special_monalisa = None
+        self.bureau_pijl = False
 
     def gang(self):
         self.background = pygame.image.load("gang_afbeeldingen/gang_achtergrond.PNG")

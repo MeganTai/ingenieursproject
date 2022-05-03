@@ -36,12 +36,10 @@ class World:
         self.inventory_slots = [Inventory(544, 57,75,75,(102,51,0),1,False,False), Inventory(544,140,75,75,(102,51,0),2,False,False), Inventory(544,223,75,75,(102,51,0),3,False,False), Inventory(544,306,75,75,(102,51,0),4,False,False), Inventory(544,389,75,75,(102,51,0),5,False,False), Inventory(544,472,75,75,(102,51,0),6,False,False)]
         self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
         self.inventory_sprites.add(self.inventory_space,self.inventory_slots,self.vuilbak)
-        self.monalisa_gezien = False
-        self.sterrennacht_gezien = False
+        
         self.special_sprites = pygame.sprite.Group()
         self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
-        self.special_monalisa = None
-        self.bureau_pijl = False
+        
         
     def act(self):
         event = pygame.event.wait()
@@ -64,7 +62,10 @@ class World:
             self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
                
         if self.text.mode == True:
-            Bureau.tekst_weergave(self, self.DISPLAYSURF)
+            self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
+            self.DISPLAYSURF.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
+            for self.big_texts in self.big_text_sprites.sprites():
+                self.DISPLAYSURF.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
 
         
     def mouse_action(self):
@@ -114,8 +115,8 @@ class World:
                     if slot.rect.collidepoint(pygame.mouse.get_pos()):
                         if slot.in_use:
                             for slots in self.inventory_slots:
-                                self.in_use = False
-                            slot.in_use = True
+                                slots.wordt_gebruikt = False
+                            slot.wordt_gebruikt = True
 
             Bureau.click_actie(self, self.bureau)
 
@@ -123,13 +124,13 @@ class World:
     
                 self.text = Tekst("   klik op de vuilbak om jouw huidige voorwerp los te laten",0,1)
      
-            if self.inventory_slots[0].in_use == False:
+            #if self.inventory_slots[0].in_use == False:
                 if self.bureau.hamer.rect.collidepoint(pygame.mouse.get_pos()):
         
                     self.text = Tekst("   een hamer, kan van pas komen.",0,1)
                     self.inventory_slots[0].in_use = True
                     self.bureau.hamer.rect.topleft = (563,82)
-            if self.inventory_slots[0].in_use == True:
+            #if self.inventory_slots[0].in_use == True:
                 if self.inventory_slots[0].in_use == False:
                     if self.inventory_slots[0].rect.collidepoint(pygame.mouse.get_pos()):
             
@@ -142,12 +143,12 @@ class World:
             
                         self.text = Tekst("",0,1)
 
-            if self.inventory_slots[1].in_use == False:
+            #if self.inventory_slots[1].in_use == False:
                 if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
         
                     self.text = Tekst("   de kast is op slot",0,1)
 
-            if self.inventory_slots[1].in_use == True:
+            #if self.inventory_slots[1].in_use == True:
                 if self.inventory_slots[1].in_use == False:
                     if self.inventory_slots[1].rect.collidepoint(pygame.mouse.get_pos()):
             
@@ -182,40 +183,11 @@ class World:
                     # Spel openen
                     subprocess.run(["python", "fish_escape.py"]) 
             
-            # Schilderij Sterrennacht aan de muur
-            if self.bureau.portret.rect.collidepoint(pygame.mouse.get_pos()):                   
-    
-                self.big_text = Tekst("wat is het geboortejaar van deze schilder?",1,1)
-                self.big_text_sprites.add(self.big_text)
-                self.open_portret_sterrennacht = Items_popup(70,150,400, 300, pathlib.Path("afbeeldingen") / "sterrennacht.PNG")
-                self.popup_sprites.add(self.open_portret_sterrennacht)
-                self.sterrennacht_gezien = True 
+            
 
-            # Schilderij Mona Lisa in de kast
-            if self.special_monalisa is not None:
-                if self.special_monalisa.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.open_portret_monalisa = Items_popup(73,45,400, 510, pathlib.Path("afbeeldingen") / "mona_lisa.PNG")
-                    self.popup_sprites.add(self.open_portret_monalisa)
-                    self.monalisa_gezien = True
-                    # Special sprites verwijderen
-                    for sprite in self.special_sprites.sprites():
-                        self.special_sprites.remove(sprite) 
+             
 
-            # Open boek met stuk eindcode voor speler
-            if self.bureau.boek.rect.collidepoint(pygame.mouse.get_pos()):
-    
-                self.big_text = Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1)
-                self.big_text_sprites.add(self.big_text)
-                self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
-                self.popup_sprites.add(self.open_boek)
-                
-                if self.open_boek.rect.collidepoint(pygame.mouse.get_pos()):
-        
-                    self.big_text = Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1)
-                    self.big_text_sprites.add(self.big_text)
-                    self.special_eindcode_1 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
-                    self.special_sprites.add(self.special_eindcode_1)
-                    self.eindcode_1_gevonden = True
+            
        
             # Vuilbak rechts benedenhoek 
             if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
@@ -226,10 +198,7 @@ class World:
                     self.special_monalisa = None
                     #self.special_sprites.kill() 
             
-            if self.bureau.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text = Tekst("   Terug naar de gang", 0, 1)
-                self.bureau_pijl = True
-                self.background = self.gang.background 
+            
                 
         
     def space_bar(self):
