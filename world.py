@@ -47,17 +47,17 @@ class World:
         event = pygame.event.wait()
 
         self.DISPLAYSURF.blit(self.background, (0, 0))
-        self.inventory_sprites.draw(self.DISPLAYSURF)
-        #self.living.living_sprites.draw(self.DISPLAYSURF)
-        #self.gang.gang_sprites.draw(self.DISPLAYSURF)
-        if self.background == self.bureau.background:
-            self.bureau.bureau_sprites.draw(self.DISPLAYSURF)
-        if self.background == self.living.background:
+
+        if self.background == self.bureau.bureau.background:
+            self.bureau.bureau.bureau_sprites.draw(self.DISPLAYSURF)
+        elif self.background == self.living.background:
             self.living.living_sprites.draw(self.DISPLAYSURF)
-        if self.background == self.gang.background:
+        elif self.background == self.gang.background:
             self.gang.gang_sprites.draw(self.DISPLAYSURF)
+        
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
+
         if self.inventory_slots[0].in_use == True:
             self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
         if self.inventory_slots[1].in_use == True:
