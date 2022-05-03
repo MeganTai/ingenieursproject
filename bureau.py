@@ -16,19 +16,20 @@ class Bureau:
     def __init__(self):
         self.bureau = Kamers("bureau")
 
-    def sprite_vergroting(self):
-        for sprite in self.bureau.bureau.bureau_sprites.sprites():
+    def sprite_vergroting(self,room):
+        for sprite in room.bureau.bureau_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Kamers.grow(self,sprite)
             else:
                 Kamers.shrink(self,sprite)
+
     def tekst_weergave(self,surface):
         self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
         surface.blit(self.text.text_sprite.text, self.text.text_sprite.rect)
         for self.big_texts in self.big_text_sprites.sprites():
             surface.blit(self.big_texts.text_sprite.text, self.big_texts.text_sprite.rect)
         
-    def click_actie(self):
+    def click_actie(self,room):
         for pot in self.bureau.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
                     if self.inventory_slots[0].in_use:

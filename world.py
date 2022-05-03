@@ -69,7 +69,7 @@ class World:
         
     def mouse_action(self):
         
-        Bureau.sprite_vergroting(self)
+        Bureau.sprite_vergroting(self,self.bureau)
 
         for sprite in self.living.living_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
@@ -117,7 +117,7 @@ class World:
                                 self.in_use = False
                             slot.in_use = True
 
-            Bureau.click_actie(self)
+            Bureau.click_actie(self, self.bureau)
 
             if self.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
     
