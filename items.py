@@ -11,6 +11,8 @@ class Items(pygame.sprite.Sprite):
         self.rect.center = (x,y)
         self.width = width
         self.height = height
+        self.x = x
+        self.y = y
 
     
     def scale(self,sprite):

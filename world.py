@@ -30,13 +30,21 @@ class World:
         self.big_text2 = Tekst("en een die de muis volgt. om beide te laten",1,2)
         self.big_text3 = Tekst("verdwijnen: druk spatie_bar",1,3)
         self.big_text_sprites.add(self.big_text1,self.big_text2,self.big_text3)
+
         self.inventory_sprites = pygame.sprite.Group()
+        self.inventory_items = pygame.sprite.Group()
         self.popup_sprites = pygame.sprite.Group()
         self.inventory_space = Inventory(528,41,107,522,(153,0,0),0,True,False)
         self.inventory_slots = [Inventory(544, 57,75,75,(102,51,0),1,False,False), Inventory(544,140,75,75,(102,51,0),2,False,False), Inventory(544,223,75,75,(102,51,0),3,False,False), Inventory(544,306,75,75,(102,51,0),4,False,False), Inventory(544,389,75,75,(102,51,0),5,False,False), Inventory(544,472,75,75,(102,51,0),6,False,False)]
+        self.hamer = Items(563,82,24,42, "afbeeldingen/hamer.PNG")
+        self.zaklamp = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
+        self.bureausleutel = Items(581,247,24,42, "afbeeldingen/hamer.PNG")
+        self.livingsleutel = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
+        self.key_card = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
         self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
-        self.inventory_sprites.add(self.inventory_space,self.inventory_slots,self.vuilbak)
-        
+        self.inventory_sprites.add(self.inventory_space,self.inventory_slots)
+        self.inventory_items.add(self.vuilbak)
+
         self.special_sprites = pygame.sprite.Group()
         self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
         
@@ -53,12 +61,14 @@ class World:
         elif self.background == self.gang.background:
             self.gang.gang_sprites.draw(self.DISPLAYSURF)
         
+        self.inventory_sprites.draw(self.DISPLAYSURF)
+        self.inventory_items.draw(self.DISPLAYSURF)
         self.popup_sprites.draw(self.DISPLAYSURF)
         self.special_sprites.draw(self.DISPLAYSURF)
 
-        if self.inventory_slots[0].in_use == True:
+        if self.inventory_slots[0].wordt_gebruikt == True:
             self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
-        if self.inventory_slots[1].in_use == True:
+        if self.inventory_slots[1].wordt_gebruikt == True:
             self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
                
         if self.text.mode == True:
@@ -89,6 +99,12 @@ class World:
                 Kamers.grow(self,sprite)
             else:
                 Kamers.shrink(self,sprite)
+        
+        for sprite in self.inventory_items.sprites():
+            if sprite.rect.collidepoint(pygame.mouse.get_pos()):
+                Kamers.grow(self,sprite)
+            else:
+                Kamers.shrink(self,sprite)
                             
     def mouse_click(self):
             
@@ -110,6 +126,9 @@ class World:
             #       (niet mogelijk om 1 grote tekst op meerdere lijnen te zetten, dus moeten we meerdere teksten onder elkaar zetten
             #   zet alles in de groep: self.big_text_sprites door: [self.big_text_sprites.(  hier de texten inzetten  )]
             
+
+
+            #actieveer inventory slot waar op geklikt wordt en deactieveerd de rest
             if self.inventory_space.rect.collidepoint(pygame.mouse.get_pos()):
                 for slot in self.inventory_slots:
                     if slot.rect.collidepoint(pygame.mouse.get_pos()):
@@ -123,79 +142,22 @@ class World:
             if self.vuilbak.rect.collidepoint(pygame.mouse.get_pos()):
     
                 self.text = Tekst("   klik op de vuilbak om jouw huidige voorwerp los te laten",0,1)
-     
-            #if self.inventory_slots[0].in_use == False:
-                if self.bureau.hamer.rect.collidepoint(pygame.mouse.get_pos()):
-        
-                    self.text = Tekst("   een hamer, kan van pas komen.",0,1)
-                    self.inventory_slots[0].in_use = True
-                    self.bureau.hamer.rect.topleft = (563,82)
-            #if self.inventory_slots[0].in_use == True:
-                if self.inventory_slots[0].in_use == False:
-                    if self.inventory_slots[0].rect.collidepoint(pygame.mouse.get_pos()):
-            
-                        self.text = Tekst("   een hamer, kan van pas komen.",0,1)
-                        self.inventory_slots[0].in_use = True
-                if self.inventory_slots[0].in_use == True:
-                    if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
-                        self.inventory_slots[0].in_use = False
-                        self.bureau.hamer.rect.topleft = (563,82)
-            
-                        self.text = Tekst("",0,1)
 
-            #if self.inventory_slots[1].in_use == False:
-                if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
-        
-                    self.text = Tekst("   de kast is op slot",0,1)
-
-            #if self.inventory_slots[1].in_use == True:
-                if self.inventory_slots[1].in_use == False:
-                    if self.inventory_slots[1].rect.collidepoint(pygame.mouse.get_pos()):
             
-                        self.text = Tekst("   waar dient deze sleutel voor?",0,1)
-                        self.inventory_slots[1].in_use = True
-                    if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
-            
-                        self.text = Tekst("   misschien kunnen we de sleutel gebruiken?",0,1)
-                if self.inventory_slots[1].in_use == True:
-                    if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
-                        self.inventory_slots[1].in_use = False
-                        self.bureau.sleutel.rect.center = (581,177)
-            
-                        self.text = Tekst("",0,1)
-                    if self.bureau.kast.rect.collidepoint(pygame.mouse.get_pos()):
-                        self.inventory_slots[1].in_use = False
-                        self.bureau.sleutel.rect.center = (581,177)
-            
-                        self.text = Tekst("   de kast is nu open!",0,1)
-                        self.open_kast = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "groene_kast.PNG")
-                        self.popup_sprites.add(self.open_kast)
-                        self.special_monalisa = Items(255,355,55,60, pathlib.Path("afbeeldingen") / "mona_lisa.PNG")
-                        self.special_sprites.add(self.special_monalisa)
-                                        
-                if self.bureau.pc.rect.collidepoint(pygame.mouse.get_pos()):                   
-
-                    self.big_text = Tekst("voer de 2 geboortejaren in van de 2 schilders",1,1)
-                    self.big_text_sprites.add(self.big_text)
-                    self.open_pc = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "computerscherm.PNG")
-                    self.popup_sprites.add(self.open_pc)
-                if self.monalisa_gezien == True and self.sterrennacht_gezien == True:
-                    # Spel openen
-                    subprocess.run(["python", "fish_escape.py"]) 
-            
-            
-
-             
 
             
        
             # Vuilbak rechts benedenhoek 
             if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
+                for slots in self.inventory_slots:
+                    if slot.wordt_gebruikt:
+                        slot.wordt_gebruikt = False
+                        slot.rect.center = (slot.x,slot.y)
                 for sprite in self.popup_sprites.sprites():
                     self.popup_sprites.remove(sprite) 
                 for sprite in self.special_sprites.sprites():
                     self.special_sprites.remove(sprite)
-                    self.special_monalisa = None
+                    self.bureau.bureau.special_monalisa = None
                     #self.special_sprites.kill() 
             
             
