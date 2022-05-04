@@ -85,26 +85,26 @@ class World:
     def mouse_action(self):
         
         
-        # gaat na in welke kame rwe zitten, en vergroot dan de sprites van die kamer waneer hover     (gang en living nog niet geimplementeerd dus hier niet uit commentaar halen!)
+        # gaat na in welke kame rwe zitten, en vergroot dan de sprites van die kamer waneer hover     
         if self.background == self.bureau.background:
             Bureau.sprite_vergroting(self,self.bureau)
-        #elif self.background == self.living.background:
-        #    Living.sprite_vergroting(self,self.living)
-        #elif self.background == self.gang.background:
-        #    Gang.sprite_vergroting(self,self.gang)
+        elif self.background == self.living.background:
+            Living.sprite_vergroting(self,self.living)
+        elif self.background == self.gang.background:
+            Gang.sprite_vergroting(self,self.gang)
 
         
         #voor special_sprites en inventory_items wordt er geen code in nieuwe file gestoken, deze blijven zo (deze moeten op elk moment kunnen runnen, dus gan we ze niet in aparte specifieke file steken)
         for sprite in self.special_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
-                Kamers.grow(self,sprite)
+                Items.scale(self,sprite)
             else:
-                Kamers.shrink(self,sprite)
+                Items.rescale(self,sprite)
         for sprite in self.inventory_items.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
-                Kamers.grow(self,sprite)
+                Items.scale(self,sprite)
             else:
-                Kamers.shrink(self,sprite)
+                Items.rescale(self,sprite)
                             
     def mouse_click(self):
             
@@ -140,10 +140,10 @@ class World:
             #indien we op kamer bureau zitten, wordt de code in file bureau hier overlopen (verminderd code in world file)   (gang en living nog niet geimplementeerd dus hier niet uit commentaar halen!)
             if self.background == self.bureau.background:
                 Bureau.click_actie(self, self.bureau)
-            #elif self.background == self.living.background:   
-            #    Living.click_actie(self,self.living)
-            #elif self.background == self.gang.background:
-            #    Gang.click_actie(self,self.gang)
+            elif self.background == self.living.background:   
+                Living.click_actie(self,self.living)
+            elif self.background == self.gang.background:
+                Gang.click_actie(self,self.gang)
 
             # Vuilbak rechts benedenhoek 
             if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):

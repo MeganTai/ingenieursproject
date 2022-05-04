@@ -5,7 +5,6 @@ from pygame.locals import *
 import pathlib
 import subprocess 
 
-from kamers import Kamers
 from items import Items
 from inventory import Inventory
 from tekst import Tekst
@@ -32,7 +31,7 @@ class Gang:
 
 
     def sprite_vergroting(self,room_loc):
-        for sprite in room_loc.bureau_sprites.sprites():
+        for sprite in room_loc.gang_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Items.scale(self, sprite)
             else:
@@ -40,4 +39,15 @@ class Gang:
 
         
     def click_actie(self,room_loc):
-        print("gang")
+
+        #deur naar gang
+            if room_loc.bureau_deur.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.text = Tekst("   Naar de bureau", 0, 1)
+                    
+                    self.background = self.bureau.background
+
+        #deur naar living
+            if room_loc.living_deur.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.text = Tekst("   naar de living", 0, 1)
+                    
+                    self.background = self.living.background

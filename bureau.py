@@ -5,7 +5,6 @@ from pygame.locals import *
 import pathlib
 import subprocess 
 
-from kamers import Kamers
 from items import Items
 from inventory import Inventory
 from tekst import Tekst
@@ -35,7 +34,6 @@ class Bureau:
         self.monalisa_gezien = False
         self.sterrennacht_gezien = False
         self.special_monalisa = None
-        self.bureau_pijl = False
 
 
 
@@ -101,7 +99,6 @@ class Bureau:
         
         # Open boek met stuk eindcode voor speler
             if room_loc.boek.rect.collidepoint(pygame.mouse.get_pos()):
-                print("boek")
                 self.big_text = Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1)
                 self.big_text_sprites.add(self.big_text)
                 self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
@@ -127,14 +124,12 @@ class Bureau:
 
         #pijl naar gang
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
-                    print("gang")
                     self.text = Tekst("   Terug naar de gang", 0, 1)
-                    room_loc.bureau_pijl = True
+                    
                     self.background = self.gang.background
 
         # pc vergrendeld en ontgrendeld
             if room_loc.pc.rect.collidepoint(pygame.mouse.get_pos()):                   
-                    print("pc")
                     self.big_text = Tekst("voer de 2 geboortejaren in van de 2 schilders",1,1)
                     self.big_text_sprites.add(self.big_text)
                     self.open_pc = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "computerscherm.PNG")
@@ -145,7 +140,6 @@ class Bureau:
 
         #kast programatie
             if room_loc.kast.rect.collidepoint(pygame.mouse.get_pos()):
-                print("kast")
                 if self.inventory_slots[2].in_use == True:
                     if self.inventory_slots[2].wordt_gebruikt == False:
                         self.text = Tekst("   misschien kunnen we de sleutel gebruiken?",0,1)

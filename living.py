@@ -5,7 +5,6 @@ from pygame.locals import *
 import pathlib
 import subprocess 
 
-from kamers import Kamers
 from items import Items
 from inventory import Inventory
 from tekst import Tekst
@@ -27,12 +26,13 @@ class Living:
         self.kast = Items(321,189,43,86, afbeeldingen_folder / "kast.PNG")
         self.open_haard = Items(407,159,130,115, afbeeldingen_folder / "open_haard.PNG")
         self.tv = Items(199, 200, 55, 39, afbeeldingen_folder / "tv.PNG")
-        
-        self.living_sprites.add(self.boekenlade, self.boekenkast, self.open_haard, self.tv, self.kast)
+        self.pijl_down = Items(125, 550, 50, 50, afbeeldingen_folder / "pijl_down.PNG")
+
+        self.living_sprites.add(self.boekenlade, self.boekenkast, self.open_haard, self.tv, self.kast,self.pijl_down)
 
 
     def sprite_vergroting(self,room_loc):
-        for sprite in room_loc.bureau_sprites.sprites():
+        for sprite in room_loc.living_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Items.scale(self, sprite)
             else:
@@ -40,4 +40,9 @@ class Living:
 
       
     def click_actie(self,room_loc):
-        print("living")
+
+        #pijl naar gang
+            if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.text = Tekst("   Terug naar de gang", 0, 1)
+                    
+                    self.background = self.gang.background
