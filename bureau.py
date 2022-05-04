@@ -138,6 +138,7 @@ class Bureau:
                     self.popup_sprites.add(self.open_pc)
                     if room_loc.monalisa_gezien == True and room_loc.sterrennacht_gezien == True:
                         # Spel openen
+                        print("game start")
                         subprocess.run(["python", "fish_escape.py"]) 
 
         #kast programatie
