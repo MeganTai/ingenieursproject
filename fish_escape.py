@@ -19,70 +19,6 @@ img_width = img.get_size()[0]
 img_height = img.get_size()[1]
 
 
-def show_score(current_score):
-    font = pygame.font.Font("freesansbold.ttf", 20)
-    text = font.render("Score:" + str(current_score), True, lightskyblue)
-    surface.blit(text, [3, 3])
-
-
-def blocks(x_block, y_block, block_width, block_height, gap):
-    pygame.draw.rect(
-        surface, lightskyblue, [x_block, y_block, block_width, block_height]
-    )
-    pygame.draw.rect(
-        surface,
-        lightskyblue,
-        [x_block, y_block + block_height + gap, block_width, surfaceHeight],
-    )
-
-
-def makeTextObjs(text, font):
-    textSurface = font.render(text, True, white)
-    return textSurface, textSurface.get_rect()
-
-
-def replay_or_quit():
-    for event in pygame.event.get([pygame.KEYDOWN, pygame.KEYUP, pygame.QUIT]):
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-
-        elif event.type == pygame.KEYDOWN:
-            continue
-
-        return event.key
-    return None
-
-
-def msg_surface(text):
-    smallText = pygame.font.Font("freesansbold.ttf", 20)
-    largeText = pygame.font.Font("freesansbold.ttf", 130)
-
-    gameOverSurface, gameOverRect = makeTextObjs(text, largeText)
-    gameOverRect.center = surfaceWidth / 2, ((surfaceHeight / 2) - 50)
-    surface.blit(gameOverSurface, gameOverRect)
-
-    textSurface, textRect = makeTextObjs("Press any key to continue", smallText)
-    textRect.center = surfaceWidth / 2, ((surfaceHeight) - 50)
-    surface.blit(textSurface, textRect)
-
-    pygame.display.update()
-    time.sleep(1)
-
-    while replay_or_quit() is None:
-        clock.tick()
-
-    main()
-
-
-def gameOver():
-    msg_surface("Game over")
-
-
-def vis(x, y, image):
-    surface.blit(image, (x, y))
-
-
 def main():
     x = 150
     y = 200
@@ -131,37 +67,135 @@ def main():
 
         vis(x, y, img)
         show_score(score)
+        updateFile(score)
 
-        if 15 <= score < 30:
-            block_move = 6
+        if 5 <= score < 15:
             gap = img_height * 2.9
 
-        if score >= 30:
+        if 15 <= score < 25:
             block_move = 6.5
             gap = img_height * 2.7
+
+        if score >= 25:
+            block_move = 6.5
+            gap = img_height * 2.5
 
         blocks(x_block, y_block, block_width, block_height, gap)
         x_block -= block_move
 
         # aanraking bij randen window
         if y > surfaceHeight - img_height or y < 0:
-            gameOver()
+            msg_surface(score)
 
         # loop van de blokken
         if x_block < (-1 * block_width):
             x_block = surfaceWidth
             block_height = random.randint(0, surfaceHeight / 2)
 
-        # passeren blokken
+        # puntentelling
+        if x_block == x:
+            score += 1
+
+        # blokken aanraken
         if x + img_width > x_block and x < x_block + block_width:
             if y < block_height or y + img_height > block_height + gap:
-                gameOver()
+                msg_surface(score)
 
-        if x > x_block + block_width and x < x_block + block_width + img_width / 5:
-            score += 1
+        # if x > x_block + block_width and x < x_block + block_width + img_width / 5 and x_block == x:
+        # µ    score += 1
 
         pygame.display.update()
         clock.tick(90)
+
+
+def updateFile(current_score):
+    f = open("scores.txt", "r")
+    file = f.readlines()
+    last = int(file[0])
+
+    if last < int(current_score):
+        f.close()
+        file = open("scores.txt", "w")
+        file.write(str(current_score))
+        file.close()
+
+        return current_score
+    return last
+
+
+def show_score(current_score):
+    font = pygame.font.Font("freesansbold.ttf", 20)
+    text = font.render("Score:" + str(current_score), True, lightskyblue)
+    surface.blit(text, [3, 3])
+
+
+def blocks(x_block, y_block, block_width, block_height, gap):
+    pygame.draw.rect(
+        surface, lightskyblue, [x_block, y_block, block_width, block_height]
+    )
+    pygame.draw.rect(
+        surface,
+        lightskyblue,
+        [x_block, y_block + block_height + gap, block_width, surfaceHeight],
+    )
+
+
+def makeTextObjs(text, font):
+    textSurface = font.render(text, True, white)
+    return textSurface, textSurface.get_rect()
+
+
+def replay_or_quit():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+
+        elif event.type == pygame.KEYUP:
+            continue
+
+        return pygame.K_SPACE
+
+
+def msg_surface(current_score):
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    largeText = pygame.font.Font("freesansbold.ttf", 130)
+    mediumText = pygame.font.Font("freesansbold.ttf", 50)
+
+    gameOverSurface, gameOverRect = makeTextObjs("Game Over", largeText)
+    gameOverRect.center = surfaceWidth / 2, ((surfaceHeight / 2) - 125)
+    surface.blit(gameOverSurface, gameOverRect)
+
+    textSurface, textRect = makeTextObjs("Press any key to continue", smallText)
+    textRect.center = surfaceWidth / 2, ((surfaceHeight) - 50)
+    surface.blit(textSurface, textRect)
+
+    lastScore, lastScoreRect = makeTextObjs(
+        "Best Score: " + str(updateFile(current_score)), mediumText
+    )
+    lastScoreRect.center = surfaceWidth / 2, ((surfaceHeight / 2) + 70)
+    surface.blit(lastScore, lastScoreRect)
+
+    currentScore, currentScoreRect = makeTextObjs(
+        "Score: " + str(current_score), mediumText
+    )
+    currentScoreRect.center = surfaceWidth / 2, (surfaceHeight / 2)
+    surface.blit(currentScore, currentScoreRect)
+
+    pygame.display.update()
+    time.sleep(1)
+
+    while replay_or_quit() is None:
+        clock.tick()
+    main()
+
+
+# def gameOver():
+#    msg_surface(score)
+
+
+def vis(x, y, image):
+    surface.blit(image, (x, y))
 
 
 main()
