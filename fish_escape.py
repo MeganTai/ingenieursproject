@@ -9,7 +9,7 @@ lightskyblue = (176, 226, 255)
 pygame.init()
 
 surfaceWidth = 800
-surfaceHeight = 500
+surfaceHeight = 509
 surface = pygame.display.set_mode((surfaceWidth, surfaceHeight))
 pygame.display.set_caption("Fish Escape")
 clock = pygame.time.Clock()
@@ -28,7 +28,7 @@ def main():
     y_block = 0
 
     block_width = 50
-    block_height = random.randint(0, surfaceHeight / 2)
+    block_height = random.randint(0, int(surfaceHeight / 2))
     gap = img_height * 3.1
 
     # snelheid van de blokken
@@ -90,7 +90,7 @@ def main():
         # loop van de blokken
         if x_block < (-1 * block_width):
             x_block = surfaceWidth
-            block_height = random.randint(0, surfaceHeight / 2)
+            block_height = random.randint(0, int(surfaceHeight / 2))
 
         # puntentelling
         if x_block == x:
@@ -154,7 +154,9 @@ def replay_or_quit():
         elif event.type == pygame.KEYUP:
             continue
 
-        return pygame.K_SPACE
+        # door deze elif wordt alleen door een toets gereageerd en niet meer door de muis
+        elif event.type == pygame.KEYDOWN:
+            return event.key
 
 
 def msg_surface(current_score):
