@@ -55,25 +55,27 @@ class Bureau:
             for pot in room_loc.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
                         if self.inventory_slots[0].wordt_gebruikt:
-                            if str(pot.afbeelding) == "afbeeldingen/gebroken_pot.PNG":
+                            print(pot.afbeelding)
+                            if str(pot.afbeelding) == "afbeeldingen\gebroken_pot.PNG":
                                 if pot == room_loc.potten[4]:
                                     self.text = Tekst("   Er zat een sleutel in!",0,1)
                                 else:
                                     self.text = Tekst("   Er zat niks in.",0,1)
 
-                            if str(pot.afbeelding) == "afbeeldingen/pot.PNG":
+                            if str(pot.afbeelding) == "afbeeldingen\pot.PNG":
+                                print("hi2")
                                 if pot == room_loc.potten[4]:
-                                    pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                                    pot.image = pygame.image.load(room_loc.pot_5.afbeelding)
-                                    pot.image = pygame.transform.scale(room_loc.pot_5.image, (36,36))
+                                    pot.afbeelding = "afbeeldingen\gebroken_pot.PNG"
+                                    pot.image = pygame.image.load(pot.afbeelding)
+                                    pot.image = pygame.transform.scale(pot.image, (36,36))
                                     self.text = Tekst("   er zat een sleutel in de pot!",0,1)
                                     self.inventory_items.add(self.bureausleutel)
                                     self.inventory_slots[2].in_use = True
                                     print("test moet breken")
                                 else:
-                                    pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
-                                    pot.image = pygame.image.load(room_loc.pot_1.afbeelding)
-                                    pot.image = pygame.transform.scale(room_loc.pot_1.image, (36,36))
+                                    pot.afbeelding = "afbeeldingen\gebroken_pot.PNG"
+                                    pot.image = pygame.image.load(pot.afbeelding)
+                                    pot.image = pygame.transform.scale(pot.image, (36,36))
                                     self.text = Tekst("   er was niks in de pot",0,1)
 
                         else:

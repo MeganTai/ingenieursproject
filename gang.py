@@ -28,7 +28,7 @@ class Gang:
         self.tablet = Items(370,529,34,27, afbeeldingen_folder / "tablet.PNG")
         
         self.gang_sprites.add(self.bureau_deur, self.living_deur, self.kastje, self.spiegel, self.tablet)
-
+        self.tablet_code = False
 
     def sprite_vergroting(self,room_loc):
         for sprite in room_loc.gang_sprites.sprites():
@@ -57,3 +57,23 @@ class Gang:
                 self.text = Tekst("   We hebben een hammer gevonden!",0,1)
                 self.inventory_items.add(self.hamer)
                 self.inventory_slots[0].in_use = True
+        
+        #spiegel
+            if room_loc.spiegel.rect.collidepoint(pygame.mouse.get_pos()):
+                if room_loc.spiegel.afbeelding == "":
+                    self.text = Tekst("   er zat een code achter de spiegel",0,1)
+                elif self.inventory_slots[0].wordt_gebruikt:
+
+                    self.big_text_1 = Tekst("   Er was een code achter de spiegel verstopt!",1,1)
+                    self.big_text_2 = Tekst("   We kunnen nu de tablet openen!",1,2)
+                    self.big_text_sprites.add(self.big_text_1,self.big_text_2)
+                    room_loc.spiegel.afbeelding = ""
+                    room_loc.gang_sprites.remove(room_loc.spiegel)
+                    room_loc.tablet_code = True
+                else:
+                    self.text = Tekst("   een spiegel, er lijkt iets achter te zitten...",0,1)
+        #tablet
+            if room_loc.tablet.rect.collidepoint(pygame.mouse.get_pos()):
+                if room_loc.tablet_code == True:
+                    print("start gang game")
+                    #hier moet code om gang minigame te starten
