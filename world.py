@@ -22,7 +22,7 @@ class World:
         self.living = Kamers("living")
         self.gang = Kamers("gang")
 
-        self.background = self.bureau.bureau.background
+        self.background = self.bureau.background
 
         self.big_text_sprites = pygame.sprite.Group()
         self.text = Tekst("",0,1)
@@ -57,8 +57,8 @@ class World:
         self.DISPLAYSURF.blit(self.background, (0, 0))
         
         # achtergrond veranderen in aanwezige kamer
-        if self.background == self.bureau.bureau.background:
-            self.bureau.bureau.bureau_sprites.draw(self.DISPLAYSURF)
+        if self.background == self.bureau.background:
+            self.bureau.bureau_sprites.draw(self.DISPLAYSURF)
         elif self.background == self.living.background:
             self.living.living_sprites.draw(self.DISPLAYSURF)
         elif self.background == self.gang.background:
@@ -85,7 +85,7 @@ class World:
         
         
         # gaat na in welke kame rwe zitten, en vergroot dan de sprites van die kamer waneer hover     (gang en living nog niet geimplementeerd dus hier niet uit commentaar halen!)
-        if self.background == self.bureau.bureau.background:
+        if self.background == self.bureau.background:
             Bureau.sprite_vergroting(self,self.bureau)
         #elif self.background == self.living.background:
         #    Living.sprite_vergroting(self,self.living)
@@ -154,7 +154,7 @@ class World:
                     self.popup_sprites.remove(sprite) 
                 for sprite in self.special_sprites.sprites():
                     self.special_sprites.remove(sprite)
-                    self.bureau.bureau.special_monalisa = None
+                    self.bureau.special_monalisa = None
                     #self.special_sprites.kill() 
        
     def space_bar(self):
