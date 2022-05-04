@@ -9,6 +9,7 @@ class Input:
         self.tekst = tekst
         self.tekst_print = FONT.render(text, True, self.color)
         self.actief = False
+        OIUYHGFD
     
     def :
         if event.type
