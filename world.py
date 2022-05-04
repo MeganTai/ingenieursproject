@@ -128,7 +128,7 @@ class World:
             
 
 
-            #actieveer inventory slot waar op geklikt wordt en deactieveerd de rest
+            #activeer inventory slot waar op geklikt wordt en deactiveerd de rest
             if self.inventory_space.rect.collidepoint(pygame.mouse.get_pos()):
                 for slot in self.inventory_slots:
                     if slot.rect.collidepoint(pygame.mouse.get_pos()):
