@@ -37,9 +37,9 @@ class World:
         self.popup_sprites = pygame.sprite.Group()
         self.inventory_space = Inventory(528,41,107,522,(153,0,0),0,True,False)
         self.inventory_slots = [Inventory(544, 57,75,75,(102,51,0),1,False,False), Inventory(544,140,75,75,(102,51,0),2,False,False), Inventory(544,223,75,75,(102,51,0),3,False,False), Inventory(544,306,75,75,(102,51,0),4,False,False), Inventory(544,389,75,75,(102,51,0),5,False,False), Inventory(544,472,75,75,(102,51,0),6,False,False)]
-        self.hamer = Items(563,82,24,42, "afbeeldingen/hamer.PNG")
+        self.hamer = Items(588,100,24,42, "afbeeldingen/hamer.PNG")
         self.zaklamp = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
-        self.bureausleutel = Items(581,247,24,42, "afbeeldingen/hamer.PNG")
+        self.bureausleutel = Items(581,177,50,50, "afbeeldingen/sleutel.PNG")
         self.livingsleutel = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
         self.key_card = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
         self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
@@ -71,9 +71,9 @@ class World:
         self.special_sprites.draw(self.DISPLAYSURF)
 
         if self.inventory_slots[0].wordt_gebruikt == True:
-            self.bureau.hamer.rect.topleft = pygame.mouse.get_pos()
+            self.hamer.rect.topleft = pygame.mouse.get_pos()
         if self.inventory_slots[1].wordt_gebruikt == True:
-            self.bureau.sleutel.rect.topleft = pygame.mouse.get_pos()
+            self.sleutel.rect.topleft = pygame.mouse.get_pos()
                
         if self.text.mode == True:
             self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
@@ -147,16 +147,20 @@ class World:
 
             # Vuilbak rechts benedenhoek 
             if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
-                for slots in self.inventory_slots:
+                for slot in self.inventory_slots:
                     if slot.wordt_gebruikt:
                         slot.wordt_gebruikt = False
-                        slot.rect.center = (slot.x,slot.y)
+                        self.hamer.rect.center = (self.hamer.x, self.hamer.y)
+                        self.zaklamp.rect.center = (self.zaklamp.x, self.zaklamp.y)
+                        self.bureausleutel.rect.center = (self.bureausleutel.x, self.bureausleutel.y)
+                        self.livingsleutel.rect.center = (self.livingsleutel.x, self.livingsleutel.y)
+                        self.key_card.rect.center = (self.key_card.x, self.key_card.y)
+
                 for sprite in self.popup_sprites.sprites():
                     self.popup_sprites.remove(sprite) 
                 for sprite in self.special_sprites.sprites():
                     self.special_sprites.remove(sprite)
                     self.bureau.special_monalisa = None
-                    #self.special_sprites.kill() 
        
     def space_bar(self):
         self.text.mode = False

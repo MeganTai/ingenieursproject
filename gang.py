@@ -51,3 +51,9 @@ class Gang:
                     self.text = Tekst("   naar de living", 0, 1)
                     
                     self.background = self.living.background
+
+        #hammer vinden
+            if room_loc.kastje.rect.collidepoint(pygame.mouse.get_pos()):
+                self.text = Tekst("   We hebben een hammer gevonden!",0,1)
+                self.inventory_items.add(self.hamer)
+                self.inventory_slots[0].in_use = True

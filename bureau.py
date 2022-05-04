@@ -67,9 +67,9 @@ class Bureau:
                                     pot.image = pygame.image.load(room_loc.pot_5.afbeelding)
                                     pot.image = pygame.transform.scale(room_loc.pot_5.image, (36,36))
                                     self.text = Tekst("   er zat een sleutel in de pot!",0,1)
-                                    room_loc.sleutel = Items(581,177,50,50, "afbeeldingen/sleutel.PNG")
-                                    room_loc.bureau_sprites.add(room_loc.sleutel)
-                                    room_loc.inventory_slots[2].in_use = True
+                                    self.inventory_items.add(self.bureausleutel)
+                                    self.inventory_slots[2].in_use = True
+                                    print("test moet breken")
                                 else:
                                     pot.afbeelding = "afbeeldingen/gebroken_pot.PNG"
                                     pot.image = pygame.image.load(room_loc.pot_1.afbeelding)
