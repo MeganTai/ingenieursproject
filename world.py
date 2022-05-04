@@ -5,12 +5,13 @@ from pygame.locals import *
 import pathlib
 import subprocess 
 
-from kamers import Kamers
 from items import Items
 from inventory import Inventory
 from tekst import Tekst
 from items_popup import Items_popup
 from bureau import Bureau
+from gang import Gang
+from living import Living
 
 class World:
     def __init__(self):
@@ -19,8 +20,8 @@ class World:
         
         #self.background = pygame.transform.scale(self.background, (750, 650))
         self.bureau = Bureau()
-        self.living = Kamers("living")
-        self.gang = Kamers("gang")
+        self.living = Living()
+        self.gang = Gang()
 
         self.background = self.bureau.background
 
