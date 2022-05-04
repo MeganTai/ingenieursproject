@@ -154,7 +154,9 @@ def replay_or_quit():
         elif event.type == pygame.KEYUP:
             continue
 
-        return pygame.K_SPACE
+        # door deze elif wordt alleen door een toets gereageerd en niet meer door de muis
+        elif event.type == pygame.KEYDOWN:
+            return event.key
 
 
 def msg_surface(current_score):
