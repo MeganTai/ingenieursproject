@@ -43,6 +43,19 @@ class Living:
 
         #pijl naar gang
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text = Tekst("   Terug naar de gang", 0, 1)
+                self.text = Tekst("   Terug naar de gang", 0, 1)
                     
-                    self.background = self.gang.background
+                self.background = self.gang.background
+        
+        # zaklamp
+            if room_loc.kast.rect.collidepoint(pygame.mouse.get_pos()):
+                self.text = Tekst("   We hebben een zaklamp gevonden!",0,1)
+                self.inventory_items.add(self.zaklamp)
+                self.inventory_slots[1].in_use = True
+
+        # livingsleutel
+            if room_loc.open_haard.rect.collidepoint(pygame.mouse.get_pos()):
+                self.text = Tekst("   We hebben een sleutel gevonden!",0,1)
+                self.inventory_items.add(self.livingsleutel)
+                self.inventory_slots[3].in_use = True
+                    

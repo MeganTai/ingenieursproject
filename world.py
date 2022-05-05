@@ -38,9 +38,9 @@ class World:
         self.inventory_space = Inventory(528,41,107,522,(153,0,0),0,True,False)
         self.inventory_slots = [Inventory(544, 57,75,75,(102,51,0),1,False,False), Inventory(544,140,75,75,(102,51,0),2,False,False), Inventory(544,223,75,75,(102,51,0),3,False,False), Inventory(544,306,75,75,(102,51,0),4,False,False), Inventory(544,389,75,75,(102,51,0),5,False,False), Inventory(544,472,75,75,(102,51,0),6,False,False)]
         self.hamer = Items(588,100,24,42, "afbeeldingen/hamer.PNG")
-        self.zaklamp = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
+        self.zaklamp = Items(580,340,55,50, "living_afbeeldingen/zaklamp.PNG")
         self.bureausleutel = Items(581,260,50,50, "afbeeldingen/sleutel.PNG")
-        self.livingsleutel = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
+        self.livingsleutel = Items(582,180,65,38, "living_afbeeldingen/livingsleutel.PNG")
         self.key_card = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
         self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
         #vergroot niet
@@ -74,6 +74,10 @@ class World:
             self.hamer.rect.topleft = pygame.mouse.get_pos()
         if self.inventory_slots[2].wordt_gebruikt == True:
             self.bureausleutel.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slots[1].wordt_gebruikt == True:
+            self.zaklamp.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slots[3].wordt_gebruikt == True:
+            self.livingsleutel.rect.topleft = pygame.mouse.get_pos()
                
         if self.text.mode == True:
             self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
