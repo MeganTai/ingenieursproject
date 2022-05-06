@@ -55,7 +55,25 @@ class Living:
 
         # livingsleutel
             if room_loc.open_haard.rect.collidepoint(pygame.mouse.get_pos()):
-                self.text = Tekst("   We hebben een sleutel gevonden!",0,1)
-                self.inventory_items.add(self.livingsleutel)
-                self.inventory_slots[3].in_use = True
+                if self.inventory_slots[1].wordt_gebruikt:
+                   self.text = Tekst("   We hebben een sleutel gevonden!",0,1)
+                   self.inventory_items.add(self.livingsleutel)
+                   self.inventory_slots[3].in_use = True
+            
+        # boekenkast
+            if room_loc.boekenkast.rect.collidepoint(pygame.mouse.get_pos()):
+                if self.inventory_slots[3].in_use == True:
+                    if self.inventory_slots[3].wordt_gebruikt == False:
+                        self.text = Tekst("   waarvoor dient deze sleutel voor?", 0, 1)
+                    if self.inventory_slots[3].wordt_gebruikt == True:
+                        self.text = Tekst("   de boekenkast is nu open!", 0, 1)
+                        self.open_kast = Items(255, 300, 200, 400, pathlib.Path("living_afbeeldingen") / "boekenkast_3kleuren.PNG")
+                        self.popup_sprites.add(self.open_kast)
+        
+        # boekenlade
+            if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
+                self.big_text = Tekst("Heb ik al niet eerder boeken gezien?", 1, 1)
+                self.big_text_sprites.add(self.big_text)
+                self.grote_boeken = Items(255, 300, 250, 250, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
+                self.popup_sprites.add(self.grote_boeken)
                     
