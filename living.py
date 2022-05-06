@@ -30,6 +30,10 @@ class Living:
 
         self.living_sprites.add(self.boekenlade, self.boekenkast, self.open_haard, self.tv, self.kast,self.pijl_down)
 
+        self.boek_gezien = False
+        self.special_geelboek = None
+        self.doublespecial_geelboek = None 
+
 
     def sprite_vergroting(self,room_loc):
         for sprite in room_loc.living_sprites.sprites():
@@ -69,11 +73,30 @@ class Living:
                         self.text = Tekst("   de boekenkast is nu open!", 0, 1)
                         self.open_kast = Items(255, 300, 200, 400, pathlib.Path("living_afbeeldingen") / "boekenkast_3kleuren.PNG")
                         self.popup_sprites.add(self.open_kast)
+                if self.inventory_slots[3].in_use == False:
+                    self.text = Tekst("   de boekenkast is op slot", 0, 1)
         
         # boekenlade
             if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
-                self.big_text = Tekst("Heb ik al niet eerder boeken gezien?", 1, 1)
+                self.big_text = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1)
                 self.big_text_sprites.add(self.big_text)
-                self.grote_boeken = Items(255, 300, 250, 250, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
+                self.grote_boeken = Items(255, 300, 200, 200, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
                 self.popup_sprites.add(self.grote_boeken)
-                    
+                room_loc.special_geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
+                self.special_sprites.add(room_loc.special_geelboek)
+                if room_loc.special_geelboek.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.gevonden_geelboek = Items_popup(250, 250, 100, 100, pathlib.Path("living_afbeeldingen") / "gevonden_geelboek.PNG")
+                    self.popup_sprites.add(self.gevonden_geelboek)
+                    self.gevonden_geelboek = True
+            
+        # geel boek over 4 boeken
+            if room_loc.special_geelboek is not None:
+                if room_loc.special_geelboek.rect.collidepoint(pygame.mouse.get_pos()):
+                    room_loc.special_geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
+                    #self.popup_sprites.add(room_loc.)
+                 
+        # tv
+            if room_loc.tv.rect.collidepoint(pygame.mouse.get_pos()):
+                self.tv_groot = Items_popup(100, 180, 320, 270, pathlib.Path("living_afbeeldingen") / "tv_groot.PNG")
+                self.popup_sprites.add(self.tv_groot)
+            
