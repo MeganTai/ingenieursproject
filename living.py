@@ -78,9 +78,9 @@ class Living:
         
         # boekenlade
             if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
-                room_loc.big_text_1 = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1) 
-                room_loc.big_text_2 = Tekst("Zoek het verschil tussen de boeken.", 1, 2)
-                self.big_text_sprites.add(room_loc.big_text)
+                self.big_text_1 = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1) 
+                self.big_text_2 = Tekst("Zoek het verschil tussen de boeken.", 1, 2)
+                self.big_text_sprites.add(self.big_text_1, self.big_text_2)
                 room_loc.vier_boeken = Items(255, 300, 200, 200, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
                 self.popup_sprites.add(room_loc.vier_boeken)
                 room_loc.special_geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
@@ -90,6 +90,13 @@ class Living:
                         self.popup_sprites.remove(sprite)
                     for sprite in self.special_sprites.sprites():
                         self.special_sprites.remove(sprite)
+
+            if room_loc.special_geel_boek is not None:
+                if room_loc.special_geel_boek.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
+                    self.popup_sprites.add(self.geelboek)
+                    room_loc.boekenlade_gezien = True
+                    
                     
 
         # tv
