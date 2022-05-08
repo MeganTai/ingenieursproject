@@ -67,13 +67,13 @@ class Living:
             if room_loc.boekenkast.rect.collidepoint(pygame.mouse.get_pos()):
                 if self.inventory_slots[3].in_use == True:
                     if self.inventory_slots[3].wordt_gebruikt == False:
-                        self.text = Tekst("   waarvoor dient deze sleutel voor?", 0, 1)
+                        self.text = Tekst("   Waarvoor dient deze sleutel?", 0, 1)
                     if self.inventory_slots[3].wordt_gebruikt == True:
-                        self.text = Tekst("   de boekenkast is nu open!", 0, 1)
+                        self.text = Tekst("   De boekenkast is nu open!", 0, 1)
                         self.open_kast = Items(255, 300, 200, 400, pathlib.Path("living_afbeeldingen") / "boekenkast_3kleuren.PNG")
                         self.popup_sprites.add(self.open_kast)
                 if self.inventory_slots[3].in_use == False:
-                    self.text = Tekst("   de boekenkast is op slot", 0, 1)
+                    self.text = Tekst("   De boekenkast is op slot", 0, 1)
         
         # boekenlade
             if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
@@ -88,9 +88,10 @@ class Living:
                         self.popup_sprites.remove(sprite)
                     for sprite in self.special_sprites.sprites():
                         self.special_sprites.remove(sprite)
-                    room_loc.gevonden_geelboek = Items_popup(250, 250, 100, 100, pathlib.Path("living_afbeeldingen") / "gevonden_geelboek.PNG")
-                    self.popup_sprites.add(room_loc.gevonden_geelboek)
-                    room_loc.boek_gezien = True
+                    room_loc.groot_geel_boek = Items_popup(250, 250, 100, 100, pathlib.Path("living_afbeeldingen") / "groot_geel_boek.PNG")
+                    self.popup_sprites.add(room_loc.groot_geel_boek)
+                    #if room_loc.boek_gezien == True:
+                        #subprocess.run(["python", "maze.py"])
 
         # tv
             if room_loc.tv.rect.collidepoint(pygame.mouse.get_pos()):
