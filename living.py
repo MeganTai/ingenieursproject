@@ -30,8 +30,9 @@ class Living:
 
         self.living_sprites.add(self.boekenlade, self.boekenkast, self.open_haard, self.tv, self.kast,self.pijl_down)
 
-        self.boek_gezien = False
-        self.special_geelboek = None
+        self.boekenkast_gezien = False
+        self.boekenlade_gezien = False
+        self.special_geel_boek = None
 
 
     def sprite_vergroting(self,room_loc):
@@ -77,7 +78,8 @@ class Living:
         
         # boekenlade
             if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
-                room_loc.big_text = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1)
+                room_loc.big_text_1 = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1) 
+                room_loc.big_text_2 = Tekst("Zoek het verschil tussen de boeken.", 1, 2)
                 self.big_text_sprites.add(room_loc.big_text)
                 room_loc.vier_boeken = Items(255, 300, 200, 200, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
                 self.popup_sprites.add(room_loc.vier_boeken)
@@ -88,13 +90,13 @@ class Living:
                         self.popup_sprites.remove(sprite)
                     for sprite in self.special_sprites.sprites():
                         self.special_sprites.remove(sprite)
-                    room_loc.groot_geel_boek = Items_popup(250, 250, 100, 100, pathlib.Path("living_afbeeldingen") / "groot_geel_boek.PNG")
-                    self.popup_sprites.add(room_loc.groot_geel_boek)
-                    #if room_loc.boek_gezien == True:
-                        #subprocess.run(["python", "maze.py"])
+                    
 
         # tv
             if room_loc.tv.rect.collidepoint(pygame.mouse.get_pos()):
                 self.tv_groot = Items_popup(100, 180, 320, 270, pathlib.Path("living_afbeeldingen") / "tv_groot.PNG")
                 self.popup_sprites.add(self.tv_groot)
+                #if room_loc.boekenkast_gezien == True and room_loc.boekenlade_gezien == True: 
+                    #if room_loc.boek_gezien == True:
+                        #subprocess.run(["python", "maze.py"])
             
