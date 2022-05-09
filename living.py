@@ -96,8 +96,6 @@ class Living:
                     self.geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
                     self.popup_sprites.add(self.geelboek)
                     room_loc.boekenlade_gezien = True
-                    
-                    
 
         # tv
             if room_loc.tv.rect.collidepoint(pygame.mouse.get_pos()):
