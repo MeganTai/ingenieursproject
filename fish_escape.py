@@ -2,8 +2,6 @@ import time
 import pygame
 import random
 
-from pygame.locals import *
-
 white = (255, 255, 255)
 lightskyblue = (176, 226, 255)
 pygame.init()
@@ -140,11 +138,6 @@ def blocks(x_block, y_block, block_width, block_height, gap):
     )
 
 
-def makeTextObjs(text, font):
-    textSurface = font.render(text, True, white)
-    return textSurface, textSurface.get_rect()
-
-
 def replay_or_quit():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -164,25 +157,29 @@ def msg_surface(current_score):
     largeText = pygame.font.Font("freesansbold.ttf", 130)
     mediumText = pygame.font.Font("freesansbold.ttf", 50)
 
-    gameOverSurface, gameOverRect = makeTextObjs("Game Over", largeText)
-    gameOverRect.center = surfaceWidth / 2, ((surfaceHeight / 2) - 125)
-    surface.blit(gameOverSurface, gameOverRect)
-
-    textSurface, textRect = makeTextObjs("Press any key to continue", smallText)
-    textRect.center = surfaceWidth / 2, ((surfaceHeight) - 50)
-    surface.blit(textSurface, textRect)
-
-    lastScore, lastScoreRect = makeTextObjs(
-        "Best Score: " + str(updateFile(current_score)), mediumText
+    gameOverSurface = largeText.render("Gamer Over", True, white)
+    gameOver_rect = gameOverSurface.get_rect(
+        center=(surfaceWidth / 2, ((surfaceHeight / 2) - 125))
     )
-    lastScoreRect.center = surfaceWidth / 2, ((surfaceHeight / 2) + 70)
-    surface.blit(lastScore, lastScoreRect)
+    surface.blit(gameOverSurface, gameOver_rect)
 
-    currentScore, currentScoreRect = makeTextObjs(
-        "Score: " + str(current_score), mediumText
+    textSurface = smallText.render("Press any key to continue", True, white)
+    text_rect = textSurface.get_rect(center=(surfaceWidth / 2, ((surfaceHeight) - 50)))
+    surface.blit(textSurface, text_rect)
+
+    lastScore = mediumText.render(
+        "Best Score: " + str(updateFile(current_score)), True, white
     )
-    currentScoreRect.center = surfaceWidth / 2, (surfaceHeight / 2)
-    surface.blit(currentScore, currentScoreRect)
+    lastScore_rect = lastScore.get_rect(
+        center=(surfaceWidth / 2, ((surfaceHeight / 2) + 70))
+    )
+    surface.blit(lastScore, lastScore_rect)
+
+    currentScore = mediumText.render("Score: " + str(current_score), True, white)
+    currentScore_rect = currentScore.get_rect(
+        center=(surfaceWidth / 2, (surfaceHeight / 2))
+    )
+    surface.blit(currentScore, currentScore_rect)
 
     pygame.display.update()
     time.sleep(1)
