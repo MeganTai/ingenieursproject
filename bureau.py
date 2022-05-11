@@ -105,6 +105,29 @@ class Bureau:
                 self.big_text_sprites.add(self.big_text)
                 self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
                 self.popup_sprites.add(self.open_boek)
+
+                if self.eindcode_2_gevonden == False:
+                    with open("scores.txt", "r") as bestand:
+                        score = bestand.read()
+                        score = int(score.strip())
+                        if score >= 30:
+                            self.eindcode_2_gevonden = True
+                
+                if self.eindcode_3_gevonden == False:
+                    with open("scores.txt", "r") as bestand: #naam bestand nog veranderen!
+                        score = bestand.read()
+                        score = int(score.strip())
+                        if score >= 30:
+                            self.eindcode_3_gevonden = True
+                            
+                if self.eindcode_4_gevonden == False:
+                    with open("scores.txt", "r") as bestand: #naam bestand nog veranderen!
+                        score = bestand.read()
+                        score = int(score.strip())
+                        if score >= 30:
+                            self.eindcode_3_gevonden = True
+                            
+                
                 
                 if self.open_boek.rect.collidepoint(pygame.mouse.get_pos()):
         

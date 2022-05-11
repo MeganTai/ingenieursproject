@@ -23,6 +23,15 @@ class World:
         self.living = Living()
         self.gang = Gang()
 
+        with open("scores.txt","w") as bestand:
+            print("0", file=bestand)
+
+        with open("scores.txt","w") as bestand: #namen nog veranderen!
+            print("0", file=bestand)
+        
+        with open("scores.txt","w") as bestand: #namen nog veranderen!
+            print("0", file=bestand)
+
         self.background = self.bureau.background
 
         self.big_text_sprites = pygame.sprite.Group()
