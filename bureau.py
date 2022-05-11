@@ -129,13 +129,25 @@ class Bureau:
                             
                 
                 
-                if self.open_boek.rect.collidepoint(pygame.mouse.get_pos()):
+                if self.eindcode_1_gevonden == False:
         
                     self.big_text = Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1)
                     self.big_text_sprites.add(self.big_text)
+                    self.eindcode_1_gevonden = True
+
+                if self.eindcode_1_gevonden:
                     self.special_eindcode_1 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
                     self.special_sprites.add(self.special_eindcode_1)
-                    self.eindcode_1_gevonden = True
+                if self.eindcode_2_gevonden:
+                    self.special_eindcode_2 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_2.PNG")
+                    self.special_sprites.add(self.special_eindcode_2)
+                if self.eindcode_3_gevonden:
+                    self.special_eindcode_3 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_3.PNG")
+                    self.special_sprites.add(self.special_eindcode_3)
+                if self.eindcode_4_gevonden:
+                    self.special_eindcode_4 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
+                    self.special_sprites.add(self.special_eindcode_4) 
+
 
         # Schilderij Mona Lisa in de kast
             if room_loc.special_monalisa is not None:
