@@ -139,13 +139,13 @@ class Bureau:
                     self.special_eindcode_1 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
                     self.special_sprites.add(self.special_eindcode_1)
                 if self.eindcode_2_gevonden:
-                    self.special_eindcode_2 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_2.PNG")
+                    self.special_eindcode_2 = Items_popup(325,125,155,47, pathlib.Path("afbeeldingen") / "eindcode_2.PNG")
                     self.special_sprites.add(self.special_eindcode_2)
                 if self.eindcode_3_gevonden:
-                    self.special_eindcode_3 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_3.PNG")
+                    self.special_eindcode_3 = Items_popup(100,350,155,47, pathlib.Path("afbeeldingen") / "eindcode_3.PNG")
                     self.special_sprites.add(self.special_eindcode_3)
                 if self.eindcode_4_gevonden:
-                    self.special_eindcode_4 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
+                    self.special_eindcode_4 = Items_popup(225,175,155,47, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
                     self.special_sprites.add(self.special_eindcode_4) 
 
 

@@ -58,7 +58,7 @@ class World:
         self.inventory_items.add(self.vuilbak)
 
         self.special_sprites = pygame.sprite.Group()
-        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
+        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = True, True, True, True
         
         
     def act(self):
