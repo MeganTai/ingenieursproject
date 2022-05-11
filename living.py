@@ -102,6 +102,5 @@ class Living:
                 self.tv_groot = Items_popup(100, 180, 320, 270, pathlib.Path("living_afbeeldingen") / "tv_groot.PNG")
                 self.popup_sprites.add(self.tv_groot)
                 if room_loc.boekenkast_gezien == True and room_loc.boekenlade_gezien == True: 
-                    if room_loc.boek_gezien == True:
-                        subprocess.run(["python", "shoot_the_teacher.py"])
+                    subprocess.run(["python", "shoot_the_teacher.py"])
             
