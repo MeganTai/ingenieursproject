@@ -30,6 +30,10 @@ class Living:
 
         self.living_sprites.add(self.boekenlade, self.boekenkast, self.open_haard, self.tv, self.kast,self.pijl_down)
 
+        self.boekenkast_gezien = False
+        self.boekenlade_gezien = False
+        self.special_geel_boek = None
+
 
     def sprite_vergroting(self,room_loc):
         for sprite in room_loc.living_sprites.sprites():
@@ -43,6 +47,61 @@ class Living:
 
         #pijl naar gang
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text = Tekst("   Terug naar de gang", 0, 1)
+                self.text = Tekst("   Terug naar de gang", 0, 1)
                     
-                    self.background = self.gang.background
+                self.background = self.gang.background
+        
+        # zaklamp
+            if room_loc.kast.rect.collidepoint(pygame.mouse.get_pos()):
+                self.text = Tekst("   We hebben een zaklamp gevonden!",0,1)
+                self.inventory_items.add(self.zaklamp)
+                self.inventory_slots[1].in_use = True
+
+        # livingsleutel
+            if room_loc.open_haard.rect.collidepoint(pygame.mouse.get_pos()):
+                if self.inventory_slots[1].wordt_gebruikt:
+                   self.text = Tekst("   We hebben een sleutel gevonden!",0,1)
+                   self.inventory_items.add(self.livingsleutel)
+                   self.inventory_slots[3].in_use = True
+            
+        # boekenkast
+            if room_loc.boekenkast.rect.collidepoint(pygame.mouse.get_pos()):
+                if self.inventory_slots[3].in_use == True:
+                    if self.inventory_slots[3].wordt_gebruikt == False:
+                        self.text = Tekst("   Waarvoor dient deze sleutel?", 0, 1)
+                    if self.inventory_slots[3].wordt_gebruikt == True:
+                        self.text = Tekst("   De boekenkast is nu open!", 0, 1)
+                        self.open_kast = Items(255, 300, 200, 400, pathlib.Path("living_afbeeldingen") / "boekenkast_3kleuren.PNG")
+                        self.popup_sprites.add(self.open_kast)
+                if self.inventory_slots[3].in_use == False:
+                    self.text = Tekst("   De boekenkast is op slot", 0, 1)
+        
+        # boekenlade
+            if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
+                self.big_text_1 = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1) 
+                self.big_text_2 = Tekst("Zoek het verschil tussen de boeken.", 1, 2)
+                self.big_text_sprites.add(self.big_text_1, self.big_text_2)
+                room_loc.vier_boeken = Items(255, 300, 200, 200, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
+                self.popup_sprites.add(room_loc.vier_boeken)
+                room_loc.special_geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
+                self.special_sprites.add(room_loc.special_geelboek)
+                if room_loc.special_geelboek.rect.collidepoint(pygame.mouse.get_pos()):
+                    for sprite in self.popup_sprites.sprites():
+                        self.popup_sprites.remove(sprite)
+                    for sprite in self.special_sprites.sprites():
+                        self.special_sprites.remove(sprite)
+
+            if room_loc.special_geel_boek is not None:
+                if room_loc.special_geel_boek.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")
+                    self.popup_sprites.add(self.geelboek)
+                    room_loc.boekenlade_gezien = True
+
+        # tv
+            if room_loc.tv.rect.collidepoint(pygame.mouse.get_pos()):
+                self.tv_groot = Items_popup(100, 180, 320, 270, pathlib.Path("living_afbeeldingen") / "tv_groot.PNG")
+                self.popup_sprites.add(self.tv_groot)
+                #if room_loc.boekenkast_gezien == True and room_loc.boekenlade_gezien == True: 
+                    #if room_loc.boek_gezien == True:
+                        #subprocess.run(["python", "maze.py"])
+            
