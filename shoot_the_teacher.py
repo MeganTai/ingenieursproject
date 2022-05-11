@@ -96,44 +96,33 @@ def fire_book():
 def main():
     groep = pygame.sprite.Group()
     # student
-    studentX = 450
-    studentY = 650
-    studentX_move = 0
+    student_move = 0
     student_sprite = pygame.sprite.Sprite()
-    student_sprite.image = pygame.image.load("afbeeldingen/book.png")
+    student_sprite.image = pygame.image.load("afbeeldingen/student.png")
     student_sprite.rect = student_sprite.image.get_rect()
-    student_sprite.rect.center = (studentX, studentY)
+    student_sprite.rect.center = (450, 650)
     groep.add(student_sprite)
 
     # teacher
     teacherlist = []
-    teacherX = []
-    teacherY = []
-    teacherX_move = []
-    teacherY_move = []
+    teacher_move = []
     number_of_teachers = 6
 
     for i in range(number_of_teachers):
         teacher_sprite = pygame.sprite.Sprite()
         teacher_sprite.image = pygame.image.load("afbeeldingen/teacher.png")
         teacher_sprite.rect = teacher_sprite.image.get_rect()
-        teacherX.append(random.randint(0, 908))
-        teacherY.append(random.randint(50, 50))
-        teacher_sprite.rect.center = (random.randint(0, 908), random.randint(50, 50))
-        teacherX_move.append(1)
-        teacherY_move.append(80)
+        teacher_sprite.rect.center = (random.randint(0, 908), 50)
         teacherlist.append(teacher_sprite)
+        teacher_move.append(1)
         groep.add(teacher_sprite)
 
     # book
-    bookX = 0
-    bookY = 650
-    bookY_move = 1
     book_state = "ready"
     book = pygame.sprite.Sprite()
     book.image = pygame.image.load("afbeeldingen/book.png")
     book.rect = book.image.get_rect()
-    book.rect.center = (bookX, bookY)
+    book.rect.center = (0, 650)
     groep.add(book)
 
     # score
@@ -141,83 +130,83 @@ def main():
 
     textX = 10
     textY = 10
-    running = True
-    while running:
+    
+    while True:
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
         groep.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                pygame.quit() 
+                sys.exit()
 
             # bewegen student
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    studentX_move = -0.5
+                    student_move = -1
                 if event.key == pygame.K_RIGHT:
-                    studentX_move = 0.5
+                    student_move = 1
+            
 
                 # boek laten bewegen bij indrukken spatie
                 if event.key == pygame.K_SPACE:
                     # de if functie dient zodat het boek niet verplaatst met de student na het vuren en drukken op spatie
                     if book_state == "ready":
                         # de x-coördinaat van het boek gelijk stellen aan die van de student zodat het boek niet meeverplaatst met de student maar op de x-coördinaat blijft van het afvuren
-                        bookX = studentX - 2
-                        bookY += 21
-
+                        book.rect.x = student_sprite.rect.x - 2
+                        book.rect.y += 21
+                        book_state = "fire"
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    studentX_move = 0
+                    student_move = 0
 
-        studentX += studentX_move
+        student_sprite.rect.x += student_move
+            
 
         # grenzen student
-        if studentX <= 0:
+        if student_sprite.rect.left <= 0:
             # kan niet verder dan grenswaarde bewegen
-            studentX = 0
-        elif studentX >= 918:
+            student_sprite.rect.left = 0
+        elif student_sprite.rect.right >= 918:
             # kan niet verder dan grenswaarde bewegen
-            studentX = 918
+            student_sprite.rect.right = 918
 
         for i in range(number_of_teachers):
-            if teacherY[i] > 700:
-                for j in range(number_of_teachers):
-                    teacherY[j] = 2000
+            if teacherlist[i].rect.y > 700:
+                for j in groep:
+                    groep.remove(j)
                 endscreen(score_count)
                 break
             # beweging leeraar
-            teacherX[i] += teacherX_move[i]
+            teacherlist[i].rect.x += teacher_move[i]
 
             # grenzen leeraar
-            if teacherX[i] <= 0:
+            if teacherlist[i].rect.left <= 0:
                 # andere richting bij berijken van grenswaarde
-                teacherX_move[i] = 1
+                teacher_move[i] = 1
                 # laten zakken bij grenzen
-                teacherY[i] += teacherY_move[i]
-            elif teacherX[i] >= 908:
+                teacherlist[i].rect.y += 80
+            elif teacherlist[i].rect.right >= 908:
                 # andere richting bij berijken van grenswaarde
-                teacherX_move[i] = -1
+                teacher_move[i] = -1
                 # laten zakken bij grenzen
-                teacherY[i] += teacherY_move[i]
+                teacherlist[i].rect.y += 80
 
-            for i in range(number_of_teachers):
-                if teacherlist[i].rect.collidepoint(book.rect.center):
-                    teacherlist[i].rect.center = (
-                        random.randint(0, 908),
-                        random.randint(50, 50),
-                    )
-                    score_count += 1
-                    bookX = 480
-                    book_state = "ready"
+            
+            if teacherlist[i].rect.collidepoint(book.rect.center):
+                teacherlist[i].rect.center = (random.randint(0, 908),50)
+                score_count += 1
+                book.rect.center = (student_sprite.rect.x - 2, student_sprite.rect.y + 21)
+                book_state = "ready"
 
         # beweging boek
-        if bookY <= 0:
-            bookY = 650
+        if book.rect.top <= 0:
+            book.rect.y = 650
             book_state = "ready"
 
         if book_state == "fire":
             fire_book()
-            bookY -= bookY_move
+            book.rect.y -= 1
 
         show_score(textX, textY, score_count)
         updateFile(score_count)
