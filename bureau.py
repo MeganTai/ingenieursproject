@@ -55,7 +55,6 @@ class Bureau:
             for pot in room_loc.potten:
                 if pot.rect.collidepoint(pygame.mouse.get_pos()):
                         if self.inventory_slots[0].wordt_gebruikt:
-                            print(pot.afbeelding)
                             if str(pot.afbeelding) == "afbeeldingen\gebroken_pot.PNG":
                                 if pot == room_loc.potten[4]:
                                     self.text = Tekst("   Er zat een sleutel in!",0,1)
@@ -63,7 +62,6 @@ class Bureau:
                                     self.text = Tekst("   Er zat niks in.",0,1)
 
                             if str(pot.afbeelding) == "afbeeldingen\pot.PNG":
-                                print("hi2")
                                 if pot == room_loc.potten[4]:
                                     pot.afbeelding = "afbeeldingen\gebroken_pot.PNG"
                                     pot.image = pygame.image.load(pot.afbeelding)
@@ -71,7 +69,6 @@ class Bureau:
                                     self.text = Tekst("   er zat een sleutel in de pot!",0,1)
                                     self.inventory_items.add(self.bureausleutel)
                                     self.inventory_slots[2].in_use = True
-                                    print("test moet breken")
                                 else:
                                     pot.afbeelding = "afbeeldingen\gebroken_pot.PNG"
                                     pot.image = pygame.image.load(pot.afbeelding)
@@ -114,7 +111,7 @@ class Bureau:
                             self.eindcode_2_gevonden = True
                 
                 if self.eindcode_3_gevonden == False:
-                    with open("scores.txt", "r") as bestand: #naam bestand nog veranderen!
+                    with open("scores_stt.txt", "r") as bestand: 
                         score = bestand.read()
                         score = int(score.strip())
                         if score >= 30:
@@ -136,18 +133,20 @@ class Bureau:
                     self.eindcode_1_gevonden = True
 
                 if self.eindcode_1_gevonden:
-                    self.special_eindcode_1 = Items_popup(275,250,155,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
+                    self.special_eindcode_1 = Items_popup(275,150,200,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
                     self.special_sprites.add(self.special_eindcode_1)
                 if self.eindcode_2_gevonden:
-                    self.special_eindcode_2 = Items_popup(325,125,155,47, pathlib.Path("afbeeldingen") / "eindcode_2.PNG")
+                    self.special_eindcode_2 = Items_popup(225,295,300,82, pathlib.Path("afbeeldingen") / "eindcode_2.PNG")
                     self.special_sprites.add(self.special_eindcode_2)
                 if self.eindcode_3_gevonden:
-                    self.special_eindcode_3 = Items_popup(100,350,155,47, pathlib.Path("afbeeldingen") / "eindcode_3.PNG")
+                    self.special_eindcode_3 = Items_popup(100,391,280,65, pathlib.Path("afbeeldingen") / "eindcode_3.PNG")
                     self.special_sprites.add(self.special_eindcode_3)
                 if self.eindcode_4_gevonden:
-                    self.special_eindcode_4 = Items_popup(225,175,155,47, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
-                    self.special_sprites.add(self.special_eindcode_4) 
+                    self.special_eindcode_4 = Items_popup(55,210,600,75, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
+                    self.special_sprites.add(self.special_eindcode_4)
 
+                #if self.eindcode_1_gevonden and self.eindcode_2_gevonden and self.eindcode_3_gevonden and self.eindcode_4_gevonden:
+                    #self.background = self.eindgame.background
 
         # Schilderij Mona Lisa in de kast
             if room_loc.special_monalisa is not None:

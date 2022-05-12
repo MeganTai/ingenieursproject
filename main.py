@@ -3,6 +3,7 @@ from pygame.locals import *
 
 from world import World
 import time, sys
+from eindgame import Eindgame
 
 pygame.init()
 
@@ -30,5 +31,8 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 world.space_bar()
+            if event.key == pygame.K_f:
+                if world.background == world.eindgame.background:
+                    Eindgame.deselect(world.eindgame)
             
         

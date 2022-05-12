@@ -12,6 +12,7 @@ from items_popup import Items_popup
 from bureau import Bureau
 from gang import Gang
 from living import Living
+from eindgame import Eindgame
 
 class World:
     def __init__(self):
@@ -22,11 +23,12 @@ class World:
         self.bureau = Bureau()
         self.living = Living()
         self.gang = Gang()
+        self.eindgame = Eindgame()
 
         with open("scores.txt","w") as bestand:
             print("0", file=bestand)
 
-        with open("scores.txt","w") as bestand: #namen nog veranderen!
+        with open("scores_stt.txt","w") as bestand: 
             print("0", file=bestand)
         
         with open("scores.txt","w") as bestand: #namen nog veranderen!
@@ -50,7 +52,7 @@ class World:
         self.zaklamp = Items(580,180,55,50, "living_afbeeldingen/zaklamp.PNG")
         self.bureausleutel = Items(581,260,50,50, "afbeeldingen/sleutel.PNG")
         self.livingsleutel = Items(582,340,65,38, "living_afbeeldingen/livingsleutel.PNG")
-        self.key_card = Items(386,399,24,42, "afbeeldingen/hamer.PNG")
+        self.key_card = Items(580,420,24,42, "afbeeldingen/key_card.PNG")
         self.vuilbak = Items(580, 510, 60, 60, "afbeeldingen/vuilbak.PNG")
         #vergroot niet
         self.inventory_sprites.add(self.inventory_space,self.inventory_slots)
@@ -58,7 +60,7 @@ class World:
         self.inventory_items.add(self.vuilbak)
 
         self.special_sprites = pygame.sprite.Group()
-        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
+        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = True, True, True, True
         
         
     def act(self):
@@ -73,6 +75,8 @@ class World:
             self.living.living_sprites.draw(self.DISPLAYSURF)
         elif self.background == self.gang.background:
             self.gang.gang_sprites.draw(self.DISPLAYSURF)
+        elif self.background == self.eindgame.background:
+            self.eindgame.eindgame_sprites.draw(self.DISPLAYSURF)
         
         self.inventory_sprites.draw(self.DISPLAYSURF)
         self.inventory_items.draw(self.DISPLAYSURF)
@@ -81,12 +85,18 @@ class World:
 
         if self.inventory_slots[0].wordt_gebruikt == True:
             self.hamer.rect.topleft = pygame.mouse.get_pos()
-        if self.inventory_slots[2].wordt_gebruikt == True:
-            self.bureausleutel.rect.topleft = pygame.mouse.get_pos()
         if self.inventory_slots[1].wordt_gebruikt == True:
             self.zaklamp.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slots[2].wordt_gebruikt == True:
+            self.bureausleutel.rect.topleft = pygame.mouse.get_pos()
         if self.inventory_slots[3].wordt_gebruikt == True:
             self.livingsleutel.rect.topleft = pygame.mouse.get_pos()
+        if self.inventory_slots[4].wordt_gebruikt == True:
+            self.key_card.rect.topleft = pygame.mouse.get_pos()
+        
+        for i in self.eindgame.geselecteerd:
+            if self.eindgame.geselecteerd[i]:
+                self.eindgame.special_eindcode[i].rect.topleft = pygame.mouse.get_pos()
                
         if self.text.mode == True:
             self.text.text_sprite.rect.topleft = pygame.mouse.get_pos()
@@ -105,6 +115,8 @@ class World:
             Living.sprite_vergroting(self,self.living)
         elif self.background == self.gang.background:
             Gang.sprite_vergroting(self,self.gang)
+        elif self.background == self.eindgame.background:
+            Eindgame.sprite_vergroting(self,self.eindgame)
 
         
         #voor special_sprites en inventory_items wordt er geen code in nieuwe file gestoken, deze blijven zo (deze moeten op elk moment kunnen runnen, dus gan we ze niet in aparte specifieke file steken)

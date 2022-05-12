@@ -26,8 +26,9 @@ class Gang:
         self.kastje = Items(64,484,44,44, afbeeldingen_folder / "gereedschapkast.PNG")
         self.spiegel = Items(324,224,48,78, afbeeldingen_folder / "spiegel.PNG")
         self.tablet = Items(370,529,34,27, afbeeldingen_folder / "tablet.PNG")
-        
-        self.gang_sprites.add(self.bureau_deur, self.living_deur, self.kastje, self.spiegel, self.tablet)
+        self.pijl_down = Items(225, 500, 50, 50, afbeeldingen_folder / "pijl_down.PNG")
+
+        self.gang_sprites.add(self.bureau_deur, self.living_deur, self.kastje, self.spiegel, self.tablet, self.pijl_down)
         self.tablet_code = False
 
     def sprite_vergroting(self,room_loc):
@@ -77,3 +78,12 @@ class Gang:
                 if room_loc.tablet_code == True:
                     print("start gang game")
                     #hier moet code om gang minigame te starten
+            
+            if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
+                if self.inventory_slots[4].wordt_gebruikt:
+                   self.ending = Items_popup(0, 0, 646, 606, afbeelding)
+                else:
+
+                    self.text = Tekst("   We kunnen nog niet weg! we hebben een key card nodig!", 0, 1)
+                    
+                    
