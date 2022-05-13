@@ -28,7 +28,7 @@ class Eindgame:
             else:
                 Items.rescale(self, sprite)
 
-    def act(self,room_loc):
+    def click_actie(self,room_loc):
 
         # wanneer er op een stuk code geklikt word, zal die geselecteerd worden als er geen andere geslecteerd is
         for i in room_loc.special_eindcode:

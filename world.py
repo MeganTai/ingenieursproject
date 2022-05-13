@@ -169,6 +169,8 @@ class World:
                 Living.click_actie(self,self.living)
             elif self.background == self.gang.background:
                 Gang.click_actie(self,self.gang)
+            elif self.background == self.eindgame.background:
+                Eindgame.click_actie(self, self.eindgame)
 
             # Vuilbak rechts benedenhoek 
             if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
