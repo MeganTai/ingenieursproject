@@ -12,9 +12,3 @@ class Items_popup(pygame.sprite.Sprite):
         self.rect.topleft = (x,y)
         self.width = width
         self.height = height
-
-    def close(self):
-        self.image = self.image
-        self.afbeelding = self.afbeelding
-    
-

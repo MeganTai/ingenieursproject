@@ -22,5 +22,3 @@ class Items(pygame.sprite.Sprite):
     def rescale(self,sprite):
         sprite.image = pygame.image.load(sprite.afbeelding)
         sprite.image = pygame.transform.scale(sprite.image, (sprite.width, sprite.height))
-
-

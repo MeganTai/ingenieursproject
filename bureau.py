@@ -16,10 +16,8 @@ class Bureau:
         self.background = pygame.image.load("afbeeldingen/achtergrond_kamer_1.png")
         # 12 sprites : 7 potten, 1 kast, 1 pc, 1 boek, 1 portret en 1 hamer  
         self.bureau_sprites = pygame.sprite.Group()
-        
         # de 12 sprites maken en dan in groep bureau_sprites steken. 
         # (x-pos, y-pos, breedte, hoogte, afbeelding_naam)  
-
         afbeeldingen_folder = pathlib.Path("afbeeldingen")
         self.potten = [Items(145,207,36,36, afbeeldingen_folder / "pot.PNG"), Items(145,303,36,36, afbeeldingen_folder / "pot.PNG"), Items(145,399,36,36, afbeeldingen_folder / "pot.PNG"), Items(145,495,36,36, afbeeldingen_folder / "pot.PNG"),Items(290,303,36,36, afbeeldingen_folder / "pot.PNG"), Items(290,399,36,36, afbeeldingen_folder / "pot.PNG"),Items(386,495,36,36, afbeeldingen_folder / "pot.PNG")]
         self.pc = Items(199,197,51,34, afbeeldingen_folder / "pc.png")
@@ -27,8 +25,8 @@ class Bureau:
         self.portret = Items(409,112,94,47, afbeeldingen_folder / "portret.PNG")
         self.kast = Items(98,183,48,96, afbeeldingen_folder / "kast.PNG")
         self.pijl_down = Items(225, 500, 50, 50, afbeeldingen_folder / "pijl_down.PNG")
-        
         self.bureau_sprites.add(self.potten, self.pc, self.boek, self.portret, self.kast, self.pijl_down)
+
         self.monalisa_gezien = False
         self.sterrennacht_gezien = False
         self.special_monalisa = None
@@ -79,19 +77,21 @@ class Bureau:
                                     self.text = Tekst("   een pot... zit er iets in?",0,1)
                 
         # Schilderij Sterrennacht aan de muur
-            if room_loc.portret.rect.collidepoint(pygame.mouse.get_pos()):                   
-                self.big_text = Tekst("wat is het geboortejaar van deze schilder?",1,1)
-                self.big_text_sprites.add(self.big_text)
+            if room_loc.portret.rect.collidepoint(pygame.mouse.get_pos()):
+                self.space_bar()
+                self.big_text_sprites.add(Tekst("wat is het geboortejaar van deze schilder?",1,1))
                 self.open_portret_sterrennacht = Items_popup(70,150,400, 300, pathlib.Path("afbeeldingen") / "sterrennacht.PNG")
                 self.popup_sprites.add(self.open_portret_sterrennacht)
                 room_loc.sterrennacht_gezien = True 
         
         # Open boek met stuk eindcode voor speler
             if room_loc.boek.rect.collidepoint(pygame.mouse.get_pos()):
-                self.big_text = Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1)
-                self.big_text_sprites.add(self.big_text)
+                #opmaak boek
+                self.space_bar()
+                self.big_text_sprites.add(Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1))
                 self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
                 self.popup_sprites.add(self.open_boek)
+                #kijkt voor de 4 stukken code 1 voor 1 na of deze gevonden is.
                 if self.eindcode_2_gevonden == False:
                     with open("scores.txt", "r") as bestand:
                         score = bestand.read()
@@ -111,10 +111,11 @@ class Bureau:
                         if score >= 20:
                             self.eindcode_3_gevonden = True
                 if self.eindcode_1_gevonden == False:
-                    self.big_text = Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1)
-                    self.big_text_sprites.add(self.big_text)
+                    self.space_bar()
+                    self.big_text_sprites.add(Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1))
                     self.eindcode_1_gevonden = True
 
+                #toont de code indien deze gevonden is
                 if self.eindcode_1_gevonden:
                     self.special_eindcode_1 = Items_popup(275,150,200,47, pathlib.Path("afbeeldingen") / "eindcode_1.PNG")
                     self.special_sprites.add(self.special_eindcode_1)
@@ -127,7 +128,7 @@ class Bureau:
                 if self.eindcode_4_gevonden:
                     self.special_eindcode_4 = Items_popup(55,210,600,75, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
                     self.special_sprites.add(self.special_eindcode_4)
-
+                #start endgame wanneer alle stukken gevonden zijn
                 if self.eindcode_1_gevonden and self.eindcode_2_gevonden and self.eindcode_3_gevonden and self.eindcode_4_gevonden:
                     self.vuilbak_slot()
                     self.background = self.eindgame.background
@@ -144,18 +145,21 @@ class Bureau:
 
         #pijl naar gang
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text = Tekst("   Terug naar de gang", 0, 1)
-                    self.background = self.gang.background
+                self.vuilbak_slot()
+                self.space_bar()
+                self.text = Tekst("   Terug naar de gang", 0, 1)
+                self.background = self.gang.background
 
         # pc vergrendeld en ontgrendeld
-            if room_loc.pc.rect.collidepoint(pygame.mouse.get_pos()):                   
-                    self.big_text = Tekst("voer de 2 geboortejaren in van de 2 schilders",1,1)
-                    self.big_text_sprites.add(self.big_text)
-                    self.open_pc = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "computerscherm.PNG")
-                    self.popup_sprites.add(self.open_pc)
-                    if room_loc.monalisa_gezien == True and room_loc.sterrennacht_gezien == True:
-                        # Spel openen
-                        subprocess.run(["python", "fish_escape.py"]) 
+            if room_loc.pc.rect.collidepoint(pygame.mouse.get_pos()):
+                self.space_bar()
+                self.big_text_sprites.add(Tekst("voer de 2 geboortejaren in van de 2 schilders",1,1))
+                self.open_pc = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "computerscherm.PNG")
+                self.popup_sprites.add(self.open_pc)
+
+                if room_loc.monalisa_gezien == True and room_loc.sterrennacht_gezien == True:
+                    # Spel openen
+                    subprocess.run(["python", "fish_escape.py"]) 
 
         #kast programatie
             if room_loc.kast.rect.collidepoint(pygame.mouse.get_pos()):
@@ -163,6 +167,8 @@ class Bureau:
                     if self.inventory_slots[2].wordt_gebruikt == False:
                         self.text = Tekst("   misschien kunnen we de sleutel gebruiken?",0,1)
                     if self.inventory_slots[2].wordt_gebruikt == True:
+                        self.vuilbak_slot()
+                        self.space_bar()
                         self.text = Tekst("   de kast is nu open!",0,1)
                         self.open_kast = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "groene_kast.PNG")
                         self.popup_sprites.add(self.open_kast)

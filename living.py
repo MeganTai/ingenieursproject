@@ -47,6 +47,8 @@ class Living:
 
         #pijl naar gang
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
+                self.vuilbak_slot()
+                self.space_bar()
                 self.text = Tekst("   Terug naar de gang", 0, 1)
                     
                 self.background = self.gang.background
@@ -60,9 +62,10 @@ class Living:
         # livingsleutel
             if room_loc.open_haard.rect.collidepoint(pygame.mouse.get_pos()):
                 if self.inventory_slots[1].wordt_gebruikt:
-                   self.text = Tekst("   We hebben een sleutel gevonden!",0,1)
-                   self.inventory_items.add(self.livingsleutel)
-                   self.inventory_slots[3].in_use = True
+                    self.vuilbak_slot()
+                    self.text = Tekst("   We hebben een sleutel gevonden!",0,1)
+                    self.inventory_items.add(self.livingsleutel)
+                    self.inventory_slots[3].in_use = True
             
         # boekenkast
             if room_loc.boekenkast.rect.collidepoint(pygame.mouse.get_pos()):
@@ -70,6 +73,7 @@ class Living:
                     if self.inventory_slots[3].wordt_gebruikt == False:
                         self.text = Tekst("   Waarvoor dient deze sleutel?", 0, 1)
                     if self.inventory_slots[3].wordt_gebruikt == True:
+                        self.vuilbak_slot()
                         self.text = Tekst("   De boekenkast is nu open!", 0, 1)
                         self.open_kast = Items(255, 300, 200, 400, pathlib.Path("living_afbeeldingen") / "boekenkast_3kleuren.PNG")
                         self.popup_sprites.add(self.open_kast)
@@ -78,9 +82,7 @@ class Living:
         
         # boekenlade
             if room_loc.boekenlade.rect.collidepoint(pygame.mouse.get_pos()):
-                self.big_text_1 = Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1) 
-                self.big_text_2 = Tekst("Zoek het verschil tussen de boeken.", 1, 2)
-                self.big_text_sprites.add(self.big_text_1, self.big_text_2)
+                self.big_text_sprites.add(Tekst("Waar heb ik deze boeken eerder al gezien...", 1, 1), Tekst("Zoek het verschil tussen de boeken.", 1, 2))
                 room_loc.vier_boeken = Items(255, 300, 200, 200, pathlib.Path("living_afbeeldingen") / "4boeken.PNG")
                 self.popup_sprites.add(room_loc.vier_boeken)
                 room_loc.special_geelboek = Items(277, 310, 47, 170, pathlib.Path("living_afbeeldingen") / "geel_boek.PNG")

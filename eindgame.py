@@ -13,8 +13,8 @@ from tekst import Tekst
 
 class Eindgame:
     def __init__(self):
-        self.background = pygame.image.load("afbeeldingen/eindgame_achtergornd.png")
-        self.background = pygame.transform.scale(self.background, (430,300))
+        self.background = pygame.image.load("afbeeldingen/endgame_achtergrond.png")
+        self.background = pygame.transform.scale(self.background, (646,605))
 
         self.eindgame_sprites = pygame.sprite.Group()
         afbeeldingen_folder = pathlib.Path("afbeeldingen")
@@ -26,10 +26,8 @@ class Eindgame:
         for sprite in room_loc.eindgame_sprites.sprites():
             if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                 Items.scale(self, sprite)
-                print("scale")
             else:
                 Items.rescale(self, sprite)
-                print("rescale")
 
     def click_actie(self,room_loc):
 
@@ -38,16 +36,13 @@ class Eindgame:
             if room_loc.special_eindcode[i].rect.collidepoint(pygame.mouse.get_pos()):
                 if room_loc.geselecteerd == [False, False, False, False]:
                     room_loc.geselecteerd[i] = True
-                print(room_loc.geselecteerd)
        
 
     def deselect(self,room_loc):
         room_loc.geselecteerd = [False, False, False, False]
-        print(room_loc.geselecteerd)
         if room_loc.special_eindcode[0].rect.y < room_loc.special_eindcode[1].rect.y - 50 < room_loc.special_eindcode[2].rect.y - 50 < room_loc.special_eindcode[3].rect.y - 50:
+            self.space_bar()
             self.inventory_items.add(self.key_card)
             self.inventory_slots[4].in_use = True
             self.background = self.bureau.background
-            self.big_text = Tekst("De code is compleet! nu kunnen we hier weg!",1,1)
-            self.big_text_sprites.add(self.big_text)
-
+            self.big_text_sprites.add(Tekst("De code is compleet! nu kunnen we hier weg!",1,1))

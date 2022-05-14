@@ -43,15 +43,19 @@ class Gang:
 
         #deur naar gang
             if room_loc.bureau_deur.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text = Tekst("   Naar de bureau", 0, 1)
+                self.vuilbak_slot()
+                self.space_bar()
+                self.text = Tekst("   Naar bureau", 0, 1)
                     
-                    self.background = self.bureau.background
+                self.background = self.bureau.background
 
         #deur naar living
             if room_loc.living_deur.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.text = Tekst("   naar de living", 0, 1)
+                self.vuilbak_slot()
+                self.space_bar()
+                self.text = Tekst("   naar de living", 0, 1)
                     
-                    self.background = self.living.background
+                self.background = self.living.background
 
         #hammer vinden
             if room_loc.kastje.rect.collidepoint(pygame.mouse.get_pos()):
@@ -64,10 +68,8 @@ class Gang:
                 if room_loc.spiegel.afbeelding == "":
                     self.text = Tekst("   er zat een code achter de spiegel",0,1)
                 elif self.inventory_slots[0].wordt_gebruikt:
-
-                    self.big_text_1 = Tekst("   Er was een code achter de spiegel verstopt!",1,1)
-                    self.big_text_2 = Tekst("   We kunnen nu de tablet openen!",1,2)
-                    self.big_text_sprites.add(self.big_text_1,self.big_text_2)
+                    self.vuilbak_slot()
+                    self.big_text_sprites.add(Tekst("   Er was een code achter de spiegel verstopt!",1,1), Tekst("   We kunnen nu de tablet openen!",1,2))
                     room_loc.spiegel.afbeelding = ""
                     room_loc.gang_sprites.remove(room_loc.spiegel)
                     room_loc.tablet_code = True
@@ -81,7 +83,10 @@ class Gang:
         #ending    
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 if self.inventory_slots[4].wordt_gebruikt:
-                   self.ending = Items_popup(0, 0, 646, 606, "afbeeldingen/ending")
+                    self.vuilbak_slot()
+                    self.space_bar()
+                    self.ending = Items_popup(0, 0, 646, 606, "afbeeldingen/ending.png")
+                    self.popup_sprites.add(self.ending)
                 else:
 
                     self.text = Tekst("   We kunnen nog niet weg! we hebben een key card nodig!", 0, 1)

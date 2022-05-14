@@ -12,4 +12,3 @@ class Inventory(pygame.sprite.Sprite):
         self.slot = slot
         self.in_use = in_use
         self.wordt_gebruikt = wordt_gebruikt
-
