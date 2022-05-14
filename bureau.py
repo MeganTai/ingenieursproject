@@ -129,6 +129,7 @@ class Bureau:
                     self.special_sprites.add(self.special_eindcode_4)
 
                 if self.eindcode_1_gevonden and self.eindcode_2_gevonden and self.eindcode_3_gevonden and self.eindcode_4_gevonden:
+                    self.vuilbak_slot()
                     self.background = self.eindgame.background
 
         # Schilderij Mona Lisa in de kast

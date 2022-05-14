@@ -26,10 +26,10 @@ class World:
         self.eindgame = Eindgame()
 
         with open("scores.txt","w") as bestand:
-            print("0", file=bestand)
+            print("30", file=bestand)
 
         with open("scores_stt.txt","w") as bestand: 
-            print("0", file=bestand)
+            print("20", file=bestand)
         
         with open("scores.txt","w") as bestand: #namen nog veranderen!
             print("0", file=bestand)
@@ -66,7 +66,10 @@ class World:
     def act(self):
         event = pygame.event.wait()
 
-        self.DISPLAYSURF.blit(self.background, (0, 0))
+        if self.background == self.eindgame.background:
+            self.DISPLAYSURF.blit(self.background, (50,150))
+        else:
+            self.DISPLAYSURF.blit(self.background, (0, 0))
         
         # achtergrond veranderen in aanwezige kamer
         if self.background == self.bureau.background:
@@ -77,6 +80,7 @@ class World:
             self.gang.gang_sprites.draw(self.DISPLAYSURF)
         elif self.background == self.eindgame.background:
             self.eindgame.eindgame_sprites.draw(self.DISPLAYSURF)
+    
         
         self.inventory_sprites.draw(self.DISPLAYSURF)
         self.inventory_items.draw(self.DISPLAYSURF)
@@ -93,8 +97,7 @@ class World:
             self.livingsleutel.rect.topleft = pygame.mouse.get_pos()
         if self.inventory_slots[4].wordt_gebruikt == True:
             self.key_card.rect.topleft = pygame.mouse.get_pos()
-        
-        for i in self.eindgame.geselecteerd:
+        for i in range(len(self.eindgame.geselecteerd)):
             if self.eindgame.geselecteerd[i]:
                 self.eindgame.special_eindcode[i].rect.topleft = pygame.mouse.get_pos()
                
@@ -174,23 +177,27 @@ class World:
 
             # Vuilbak rechts benedenhoek 
             if self.inventory_slots[5].rect.collidepoint(pygame.mouse.get_pos()):
-                for slot in self.inventory_slots:
-                    if slot.wordt_gebruikt:
-                        slot.wordt_gebruikt = False
-                        self.hamer.rect.center = (self.hamer.x, self.hamer.y)
-                        self.zaklamp.rect.center = (self.zaklamp.x, self.zaklamp.y)
-                        self.bureausleutel.rect.center = (self.bureausleutel.x, self.bureausleutel.y)
-                        self.livingsleutel.rect.center = (self.livingsleutel.x, self.livingsleutel.y)
-                        self.key_card.rect.center = (self.key_card.x, self.key_card.y)
+                self.vuilbak_slot()
 
-                for sprite in self.popup_sprites.sprites():
-                    self.popup_sprites.remove(sprite) 
-                for sprite in self.special_sprites.sprites():
-                    self.special_sprites.remove(sprite)
-                    self.bureau.special_monalisa = None
-       
+
     def space_bar(self):
         self.text.mode = False
         self.text = Tekst("",0,1)
         for text in self.big_text_sprites.sprites():
             self.big_text_sprites.remove(text)
+
+    def vuilbak_slot(self):
+        for slot in self.inventory_slots:
+            if slot.wordt_gebruikt:
+                slot.wordt_gebruikt = False
+                self.hamer.rect.center = (self.hamer.x, self.hamer.y)
+                self.zaklamp.rect.center = (self.zaklamp.x, self.zaklamp.y)
+                self.bureausleutel.rect.center = (self.bureausleutel.x, self.bureausleutel.y)
+                self.livingsleutel.rect.center = (self.livingsleutel.x, self.livingsleutel.y)
+                self.key_card.rect.center = (self.key_card.x, self.key_card.y)
+
+            for sprite in self.popup_sprites.sprites():
+                self.popup_sprites.remove(sprite) 
+            for sprite in self.special_sprites.sprites():
+                self.special_sprites.remove(sprite)
+                self.bureau.special_monalisa = None

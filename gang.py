@@ -78,10 +78,10 @@ class Gang:
                 if room_loc.tablet_code == True:
                     print("start gang game")
                     #hier moet code om gang minigame te starten
-            
+        #ending    
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 if self.inventory_slots[4].wordt_gebruikt:
-                   self.ending = Items_popup(0, 0, 646, 606, afbeelding)
+                   self.ending = Items_popup(0, 0, 646, 606, "afbeeldingen/ending")
                 else:
 
                     self.text = Tekst("   We kunnen nog niet weg! we hebben een key card nodig!", 0, 1)

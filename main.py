@@ -21,7 +21,6 @@ while True:
     
     pygame.display.update()
     for event in events:
-        print(event)
         if event.type == QUIT:
             pygame.quit() 
             sys.exit()
@@ -34,7 +33,7 @@ while True:
                 world.space_bar()
             if event.key == pygame.K_f:
                 if world.background == world.eindgame.background:
-                    Eindgame.deselect(world.eindgame)
+                    Eindgame.deselect(world, world.eindgame)
         
         elif event.type == pygame.MOUSEMOTION:
             world.mouse_action()
