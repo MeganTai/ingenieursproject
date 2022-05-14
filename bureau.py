@@ -25,8 +25,6 @@ class Bureau:
         self.pc = Items(199,197,51,34, afbeeldingen_folder / "pc.png")
         self.boek = Items(241,200,18,21, afbeeldingen_folder / "eboek.PNG")
         self.portret = Items(409,112,94,47, afbeeldingen_folder / "portret.PNG")
-        #self.hamer = Items(386,399,24,42, afbeeldingen_folder / "hamer.PNG")
-        #self.vuilbak = Items(580, 510, 60, 60, afbeeldingen_folder / "vuilbak.PNG")
         self.kast = Items(98,183,48,96, afbeeldingen_folder / "kast.PNG")
         self.pijl_down = Items(225, 500, 50, 50, afbeeldingen_folder / "pijl_down.PNG")
         
@@ -34,9 +32,6 @@ class Bureau:
         self.monalisa_gezien = False
         self.sterrennacht_gezien = False
         self.special_monalisa = None
-
-
-
 
 
     def sprite_vergroting(self,room_loc):
@@ -47,8 +42,6 @@ class Bureau:
                 Items.rescale(self, sprite)
 
 
-        
-        
     def click_actie(self,room_loc):
 
         #volledige programma voor de 7 potten
@@ -60,7 +53,6 @@ class Bureau:
                                     self.text = Tekst("   Er zat een sleutel in!",0,1)
                                 else:
                                     self.text = Tekst("   Er zat niks in.",0,1)
-
                             if str(pot.afbeelding) == "afbeeldingen\pot.PNG":
                                 if pot == room_loc.potten[4]:
                                     pot.afbeelding = "afbeeldingen\gebroken_pot.PNG"
@@ -74,14 +66,12 @@ class Bureau:
                                     pot.image = pygame.image.load(pot.afbeelding)
                                     pot.image = pygame.transform.scale(pot.image, (36,36))
                                     self.text = Tekst("   er was niks in de pot",0,1)
-
                         else:
                             if str(pot.afbeelding) == "afbeeldingen\gebroken_pot.PNG":
                                 if pot == room_loc.potten[4]:
                                     self.text = Tekst("   Er zat een sleutel in!",0,1)
                                 else:
                                     self.text = Tekst("   Er zat niks in.",0,1)
-
                             if str(pot.afbeelding) == "afbeeldingen\pot.PNG":
                                 if pot == room_loc.potten[4]:
                                     self.text = Tekst("   een pot... je ziet iets glimmend vanbinnen...",0,1)
@@ -102,32 +92,25 @@ class Bureau:
                 self.big_text_sprites.add(self.big_text)
                 self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
                 self.popup_sprites.add(self.open_boek)
-
                 if self.eindcode_2_gevonden == False:
                     with open("scores.txt", "r") as bestand:
                         score = bestand.read()
                         score = int(score.strip())
-                        if score >= 30:
+                        if score >= 20:
                             self.eindcode_2_gevonden = True
-                
                 if self.eindcode_3_gevonden == False:
                     with open("scores_stt.txt", "r") as bestand: 
                         score = bestand.read()
                         score = int(score.strip())
                         if score >= 30:
                             self.eindcode_3_gevonden = True
-                            
                 if self.eindcode_4_gevonden == False:
-                    with open("scores.txt", "r") as bestand: #naam bestand nog veranderen!
+                    with open("scores_worm.txt", "r") as bestand: 
                         score = bestand.read()
                         score = int(score.strip())
-                        if score >= 30:
+                        if score >= 20:
                             self.eindcode_3_gevonden = True
-                            
-                
-                
                 if self.eindcode_1_gevonden == False:
-        
                     self.big_text = Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1)
                     self.big_text_sprites.add(self.big_text)
                     self.eindcode_1_gevonden = True
@@ -145,8 +128,8 @@ class Bureau:
                     self.special_eindcode_4 = Items_popup(55,210,600,75, pathlib.Path("afbeeldingen") / "eindcode_4.PNG")
                     self.special_sprites.add(self.special_eindcode_4)
 
-                #if self.eindcode_1_gevonden and self.eindcode_2_gevonden and self.eindcode_3_gevonden and self.eindcode_4_gevonden:
-                    #self.background = self.eindgame.background
+                if self.eindcode_1_gevonden and self.eindcode_2_gevonden and self.eindcode_3_gevonden and self.eindcode_4_gevonden:
+                    self.background = self.eindgame.background
 
         # Schilderij Mona Lisa in de kast
             if room_loc.special_monalisa is not None:
@@ -161,7 +144,6 @@ class Bureau:
         #pijl naar gang
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                     self.text = Tekst("   Terug naar de gang", 0, 1)
-                    
                     self.background = self.gang.background
 
         # pc vergrendeld en ontgrendeld
