@@ -29,10 +29,10 @@ class World:
 
         #de 3 files met highscore van de 3 minigames worden gereset.
         with open("scores.txt","w") as bestand:
-            print("30", file=bestand)
+            print("0", file=bestand)
         with open("scores_stt.txt","w") as bestand: 
-            print("20", file=bestand)
-        with open("scores_snake.txt","w") as bestand: 
+            print("0", file=bestand)
+        with open("scores_worm.txt","w") as bestand: 
             print("0", file=bestand)
 
         #alle spritegroepen uit world file worden aangemaakt.
@@ -64,7 +64,7 @@ class World:
         self.inventory_items.add(self.vuilbak)
 
         #4 bool variabelen voor de eindcode stukken 
-        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = True, True, True, True
+        self.eindcode_1_gevonden, self.eindcode_2_gevonden, self.eindcode_3_gevonden, self.eindcode_4_gevonden = False, False, False, False
         
 
     #functie om alles op het scherm te tekenen    

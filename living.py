@@ -77,6 +77,7 @@ class Living:
                         self.text = Tekst("   De boekenkast is nu open!", 0, 1)
                         self.open_kast = Items(255, 300, 200, 400, pathlib.Path("living_afbeeldingen") / "boekenkast_3kleuren.PNG")
                         self.popup_sprites.add(self.open_kast)
+                        room_loc.boekenkast_gezien = True
                 if self.inventory_slots[3].in_use == False:
                     self.text = Tekst("   De boekenkast is op slot", 0, 1)
         

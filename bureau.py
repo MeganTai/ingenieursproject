@@ -88,7 +88,7 @@ class Bureau:
             if room_loc.boek.rect.collidepoint(pygame.mouse.get_pos()):
                 #opmaak boek
                 self.space_bar()
-                self.big_text_sprites.add(Tekst("verzamel de overige stukken code doorheen dit spel...", 1, 1))
+                self.big_text_sprites.add(Tekst("verzamel de overige stukken code", 1, 1), Tekst("doorheen dit spel...", 1, 2))
                 self.open_boek = Items_popup(50,150,430,300, pathlib.Path("afbeeldingen") / "open_boek.PNG")
                 self.popup_sprites.add(self.open_boek)
                 #kijkt voor de 4 stukken code 1 voor 1 na of deze gevonden is.
@@ -109,10 +109,10 @@ class Bureau:
                         score = bestand.read()
                         score = int(score.strip())
                         if score >= 20:
-                            self.eindcode_3_gevonden = True
+                            self.eindcode_4_gevonden = True
                 if self.eindcode_1_gevonden == False:
                     self.space_bar()
-                    self.big_text_sprites.add(Tekst("Hebbes! Nu nog op zoek naar de andere 3 stukken", 1, 1))
+                    self.big_text_sprites.add(Tekst("Hebbes! Nu nog op zoek naar de andere 3 delen", 1, 1))
                     self.eindcode_1_gevonden = True
 
                 #toont de code indien deze gevonden is

@@ -45,4 +45,4 @@ class Eindgame:
             self.inventory_items.add(self.key_card)
             self.inventory_slots[4].in_use = True
             self.background = self.bureau.background
-            self.big_text_sprites.add(Tekst("De code is compleet! nu kunnen we hier weg!",1,1))
+            self.big_text_sprites.add(Tekst("De code is compleet! nu kunnen",1,1), Tekst("we hier weg!",1,2))
