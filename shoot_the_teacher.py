@@ -67,7 +67,7 @@ def endscreen(current_score):
     gameOver_rect = gameOverSurface.get_rect(center=(width / 2, ((height / 2) - 125)))
     screen.blit(gameOverSurface, gameOver_rect)
 
-    textSurface = smallText.render("Press any key to continue", True, green)
+    textSurface = smallText.render("Press any key to replay", True, green)
     text_rect = textSurface.get_rect(center=(width / 2, ((height) - 50)))
     screen.blit(textSurface, text_rect)
 
