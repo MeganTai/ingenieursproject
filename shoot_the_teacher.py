@@ -1,14 +1,15 @@
-from email.mime import image
 import pygame
 import random
-import math
 import time
+import sys
 
 pygame.init()
 
 width = 1000
 height = 800
+
 white = (255, 255, 255)
+green = (0, 250, 0)
 
 screen = pygame.display.set_mode((width, height))
 
@@ -22,10 +23,10 @@ pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
 
 
-def show_score(x, y, score_count):
+def show_score(score_count):
     font = pygame.font.Font("freesansbold.ttf", 20)
-    score = font.render("Score : " + str(score_count), True, (255, 255, 255))
-    screen.blit(score, (x, y))
+    score = font.render("Score : " + str(score_count), True, white)
+    screen.blit(score, (10, 10))
 
 
 def updateFile(current_score):
@@ -62,21 +63,21 @@ def endscreen(current_score):
     mediumText = pygame.font.Font("freesansbold.ttf", 50)
     largeText = pygame.font.Font("freesansbold.ttf", 130)
 
-    gameOverSurface = largeText.render("Gamer Over", True, white)
+    gameOverSurface = largeText.render("Game Over", True, green)
     gameOver_rect = gameOverSurface.get_rect(center=(width / 2, ((height / 2) - 125)))
     screen.blit(gameOverSurface, gameOver_rect)
 
-    textSurface = smallText.render("Press any key to continue", True, white)
+    textSurface = smallText.render("Press any key to continue", True, green)
     text_rect = textSurface.get_rect(center=(width / 2, ((height) - 50)))
     screen.blit(textSurface, text_rect)
 
     lastScore = mediumText.render(
-        "Best Score: " + str(updateFile(current_score)), True, white
+        "Best Score: " + str(updateFile(current_score)), True, green
     )
     lastScore_rect = lastScore.get_rect(center=(width / 2, ((height / 2) + 70)))
     screen.blit(lastScore, lastScore_rect)
 
-    currentScore = mediumText.render("Score: " + str(current_score), True, white)
+    currentScore = mediumText.render("Score: " + str(current_score), True, green)
     currentScore_rect = currentScore.get_rect(center=(width / 2, (height / 2)))
     screen.blit(currentScore, currentScore_rect)
 
@@ -100,7 +101,7 @@ def main():
     student_sprite = pygame.sprite.Sprite()
     student_sprite.image = pygame.image.load("afbeeldingen/student.png")
     student_sprite.rect = student_sprite.image.get_rect()
-    student_sprite.rect.center = (450, 650)
+    student_sprite.rect.center = (450, 700)
     groep.add(student_sprite)
 
     # teacher
@@ -118,50 +119,51 @@ def main():
         groep.add(teacher_sprite)
 
     # book
+    # ready - het book is klaar om geworpen te worden
+    # fire - het book is in beweging
     book_state = "ready"
     book = pygame.sprite.Sprite()
     book.image = pygame.image.load("afbeeldingen/book.png")
     book.rect = book.image.get_rect()
-    book.rect.center = (0, 650)
+    book.rect.center = (student_sprite.rect.x + 15, student_sprite.rect.y + 37)
     groep.add(book)
 
     # score
     score_count = 0
 
-    textX = 10
-    textY = 10
-    
     while True:
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
         groep.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit() 
+                pygame.quit()
                 sys.exit()
 
             # bewegen student
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    student_move = -1
+                    student_move = -2
                 if event.key == pygame.K_RIGHT:
-                    student_move = 1
-            
+                    student_move = 2
 
                 # boek laten bewegen bij indrukken spatie
                 if event.key == pygame.K_SPACE:
                     # de if functie dient zodat het boek niet verplaatst met de student na het vuren en drukken op spatie
                     if book_state == "ready":
                         # de x-coördinaat van het boek gelijk stellen aan die van de student zodat het boek niet meeverplaatst met de student maar op de x-coördinaat blijft van het afvuren
-                        book.rect.x = student_sprite.rect.x - 2
-                        book.rect.y += 21
+                        book.rect.center = (
+                            student_sprite.rect.x + 15,
+                            student_sprite.rect.y + 37,
+                        )
                         book_state = "fire"
+
+            # stoppen met bewegen bij loslaten van de toetsen
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     student_move = 0
 
         student_sprite.rect.x += student_move
-            
 
         # grenzen student
         if student_sprite.rect.left <= 0:
@@ -172,11 +174,9 @@ def main():
             student_sprite.rect.right = 918
 
         for i in range(number_of_teachers):
-            if teacherlist[i].rect.y > 700:
-                for j in groep:
-                    groep.remove(j)
+            # grens waar leraren niet over kunnen bij de student, bij aanraking -> eindscherm
+            if teacherlist[i].rect.y > 600:
                 endscreen(score_count)
-                break
             # beweging leeraar
             teacherlist[i].rect.x += teacher_move[i]
 
@@ -192,27 +192,33 @@ def main():
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
 
-            
+            # aanraking van het boek met een van de leraren
             if teacherlist[i].rect.collidepoint(book.rect.center):
-                teacherlist[i].rect.center = (random.randint(0, 908),50)
+                teacherlist[i].rect.center = (random.randint(0, 908), 50)
                 score_count += 1
-                book.rect.center = (student_sprite.rect.x - 2, student_sprite.rect.y + 21)
                 book_state = "ready"
 
-        # beweging boek
+            # bij aanraken van de student en een van de leraren direct naar eindscherm (is uit voorzorg, want de leraren geraken niet aan de student door de grens van eerder)
+            if student_sprite.rect.collidepoint(teacherlist[i].rect.center):
+                endscreen(score_count)
+
+        # boek terug ready bij aanraking bovenaan scherm
         if book.rect.top <= 0:
             book.rect.y = 650
             book_state = "ready"
 
+        # beweging boek
         if book_state == "fire":
             fire_book()
             book.rect.y -= 1
 
-        show_score(textX, textY, score_count)
+        # boek na vuren terug plaatsen in de handen van de student
+        if book_state == "ready":
+            book.rect.center = (student_sprite.rect.x + 15, student_sprite.rect.y + 37)
+
+        show_score(score_count)
         updateFile(score_count)
         pygame.display.update()
 
 
 main()
-pygame.quit()
-quit()
