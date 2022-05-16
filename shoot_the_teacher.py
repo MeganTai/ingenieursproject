@@ -115,7 +115,7 @@ def main():
         teacher_sprite.rect = teacher_sprite.image.get_rect()
         teacher_sprite.rect.center = (random.randint(0, 908), 50)
         teacherlist.append(teacher_sprite)
-        teacher_move.append(1)
+        teacher_move.append(4)
         groep.add(teacher_sprite)
 
     # book
@@ -177,18 +177,22 @@ def main():
             # grens waar leraren niet over kunnen bij de student, bij aanraking -> eindscherm
             if teacherlist[i].rect.y > 600:
                 endscreen(score_count)
-            # beweging leeraar
+            # beweging leraar
             teacherlist[i].rect.x += teacher_move[i]
 
-            # grenzen leeraar
+            # grenzen leraar
             if teacherlist[i].rect.left <= 0:
-                # andere richting bij berijken van grenswaarde
-                teacher_move[i] = 1
+                # andere richting bij bereiken van grenswaarde
+                teacher_move[i] = 4
+                # opschuiven naar rechts anders komen we in oneindige loop
+                teacherlist[i].rect.left = 1
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
             elif teacherlist[i].rect.right >= 908:
-                # andere richting bij berijken van grenswaarde
-                teacher_move[i] = -1
+                # andere richting bij bereiken van grenswaarde
+                teacher_move[i] = -4
+                # opschuiven naar links anders komen we in oneindige loop
+                teacherlist[i].rect.right = 907
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
 
@@ -210,9 +214,9 @@ def main():
         # beweging boek
         if book_state == "fire":
             fire_book()
-            book.rect.y -= 1
+            book.rect.y -= 5
 
-        # boek na vuren terug plaatsen in de handen van de student
+        # boek na vuren terugplaatsen in de handen van de student
         if book_state == "ready":
             book.rect.center = (student_sprite.rect.x + 15, student_sprite.rect.y + 37)
 
