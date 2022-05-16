@@ -1,9 +1,11 @@
 import time
+from turtle import width
 import pygame
 import random
 
 white = (255, 255, 255)
 lightskyblue = (176, 226, 255)
+lightblue = (204, 255, 255)
 pygame.init()
 
 surfaceWidth = 800
@@ -123,7 +125,7 @@ def updateFile(current_score):
 
 def show_score(current_score):
     font = pygame.font.Font("freesansbold.ttf", 20)
-    text = font.render("Score:" + str(current_score), True, lightskyblue)
+    text = font.render("Score:" + str(current_score), True, white)
     surface.blit(text, [3, 3])
 
 
@@ -157,25 +159,25 @@ def msg_surface(current_score):
     largeText = pygame.font.Font("freesansbold.ttf", 130)
     mediumText = pygame.font.Font("freesansbold.ttf", 50)
 
-    gameOverSurface = largeText.render("Gamer Over", True, white)
+    gameOverSurface = largeText.render("Game Over", True, lightblue)
     gameOver_rect = gameOverSurface.get_rect(
         center=(surfaceWidth / 2, ((surfaceHeight / 2) - 125))
     )
     surface.blit(gameOverSurface, gameOver_rect)
 
-    textSurface = smallText.render("Press any key to continue", True, white)
+    textSurface = smallText.render("Press any key to replay", True, lightblue)
     text_rect = textSurface.get_rect(center=(surfaceWidth / 2, ((surfaceHeight) - 50)))
     surface.blit(textSurface, text_rect)
 
     lastScore = mediumText.render(
-        "Best Score: " + str(updateFile(current_score)), True, white
+        "Best Score: " + str(updateFile(current_score)), True, lightblue
     )
     lastScore_rect = lastScore.get_rect(
         center=(surfaceWidth / 2, ((surfaceHeight / 2) + 70))
     )
     surface.blit(lastScore, lastScore_rect)
 
-    currentScore = mediumText.render("Score: " + str(current_score), True, white)
+    currentScore = mediumText.render("Score: " + str(current_score), True, lightblue)
     currentScore_rect = currentScore.get_rect(
         center=(surfaceWidth / 2, (surfaceHeight / 2))
     )
