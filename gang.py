@@ -80,6 +80,7 @@ class Gang:
                 if room_loc.tablet_code == True:
                     print("start gang game")
                     #hier moet code om gang minigame te starten
+                    subprocess.run(["python", "worm.py"])
         #ending    
             if room_loc.pijl_down.rect.collidepoint(pygame.mouse.get_pos()):
                 if self.inventory_slots[4].wordt_gebruikt:
