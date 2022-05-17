@@ -115,7 +115,7 @@ def main():
         teacher_sprite.rect = teacher_sprite.image.get_rect()
         teacher_sprite.rect.center = (random.randint(0, 908), 50)
         teacherlist.append(teacher_sprite)
-        teacher_move.append(4)
+        teacher_move.append(1)
         groep.add(teacher_sprite)
 
     # book
@@ -183,14 +183,14 @@ def main():
             # grenzen leraar
             if teacherlist[i].rect.left <= 0:
                 # andere richting bij bereiken van grenswaarde
-                teacher_move[i] = 4
+                teacher_move[i] = 1
                 # opschuiven naar rechts anders komen we in oneindige loop
                 teacherlist[i].rect.left = 1
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
             elif teacherlist[i].rect.right >= 908:
                 # andere richting bij bereiken van grenswaarde
-                teacher_move[i] = -4
+                teacher_move[i] = -1
                 # opschuiven naar links anders komen we in oneindige loop
                 teacherlist[i].rect.right = 907
                 # laten zakken bij grenzen
