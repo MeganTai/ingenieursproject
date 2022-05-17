@@ -64,7 +64,7 @@ def endscreen(current_score):
     largeText = pygame.font.Font("freesansbold.ttf", 130)
 
     gameOverSurface = largeText.render("Game Over", True, green)
-    gameOver_rect = gameOverSurface.get_rect(center=(width / 2, ((height / 2) - 125)))
+    gameOver_rect = gameOverSurface.get_rect(center=(width / 2, ((height / 4) + 20)))
     screen.blit(gameOverSurface, gameOver_rect)
 
     textSurface = smallText.render("Press any key to replay", True, green)
@@ -169,9 +169,9 @@ def main():
         if student_sprite.rect.left <= 0:
             # kan niet verder dan grenswaarde bewegen
             student_sprite.rect.left = 0
-        elif student_sprite.rect.right >= 918:
+        elif student_sprite.rect.right >= 1000:
             # kan niet verder dan grenswaarde bewegen
-            student_sprite.rect.right = 918
+            student_sprite.rect.right = 1000
 
         for i in range(number_of_teachers):
             # grens waar leraren niet over kunnen bij de student, bij aanraking -> eindscherm
@@ -188,17 +188,17 @@ def main():
                 teacherlist[i].rect.left = 1
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
-            elif teacherlist[i].rect.right >= 908:
+            elif teacherlist[i].rect.right >= 1000:
                 # andere richting bij bereiken van grenswaarde
                 teacher_move[i] = -1
                 # opschuiven naar links anders komen we in oneindige loop
-                teacherlist[i].rect.right = 907
+                teacherlist[i].rect.right = 999
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
 
             # aanraking van het boek met een van de leraren
             if teacherlist[i].rect.collidepoint(book.rect.center):
-                teacherlist[i].rect.center = (random.randint(0, 908), 50)
+                teacherlist[i].rect.center = (random.randint(0, 1000), 50)
                 score_count += 1
                 book_state = "ready"
 
