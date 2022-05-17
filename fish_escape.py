@@ -126,7 +126,7 @@ def updateFile(current_score):
 def show_score(current_score):
     font = pygame.font.Font("freesansbold.ttf", 20)
     text = font.render("Score:" + str(current_score), True, white)
-    surface.blit(text, [3, 3])
+    surface.blit(text, [10, 10])
 
 
 def blocks(x_block, y_block, block_width, block_height, gap):
