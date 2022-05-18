@@ -78,8 +78,6 @@ class Bureau:
                 
         # Schilderij Sterrennacht aan de muur
             if room_loc.portret.rect.collidepoint(pygame.mouse.get_pos()):
-                self.space_bar()
-                self.big_text_sprites.add(Tekst("wat is het geboortejaar van deze schilder?",1,1))
                 self.open_portret_sterrennacht = Items_popup(70,150,400, 300, pathlib.Path("afbeeldingen") / "sterrennacht.PNG")
                 self.popup_sprites.add(self.open_portret_sterrennacht)
                 room_loc.sterrennacht_gezien = True 
