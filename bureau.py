@@ -150,8 +150,6 @@ class Bureau:
 
         # pc vergrendeld en ontgrendeld
             if room_loc.pc.rect.collidepoint(pygame.mouse.get_pos()):
-                self.space_bar()
-                self.big_text_sprites.add(Tekst("voer de 2 geboortejaren in van de 2 schilders",1,1))
                 self.open_pc = Items_popup(50,50,500, 500, pathlib.Path("afbeeldingen") / "computerscherm.PNG")
                 self.popup_sprites.add(self.open_pc)
 
