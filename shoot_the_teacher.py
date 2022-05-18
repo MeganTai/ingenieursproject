@@ -113,7 +113,7 @@ def main():
         teacher_sprite = pygame.sprite.Sprite()
         teacher_sprite.image = pygame.image.load("afbeeldingen/teacher.png")
         teacher_sprite.rect = teacher_sprite.image.get_rect()
-        teacher_sprite.rect.center = (random.randint(0, 908), 50)
+        teacher_sprite.rect.center = (random.randint(0, width), 50)
         teacherlist.append(teacher_sprite)
         teacher_move.append(1)
         groep.add(teacher_sprite)
@@ -169,9 +169,9 @@ def main():
         if student_sprite.rect.left <= 0:
             # kan niet verder dan grenswaarde bewegen
             student_sprite.rect.left = 0
-        elif student_sprite.rect.right >= 1000:
+        elif student_sprite.rect.right >= width:
             # kan niet verder dan grenswaarde bewegen
-            student_sprite.rect.right = 1000
+            student_sprite.rect.right = width
 
         for i in range(number_of_teachers):
             # grens waar leraren niet over kunnen bij de student, bij aanraking -> eindscherm
@@ -183,14 +183,14 @@ def main():
             # grenzen leraar
             if teacherlist[i].rect.left <= 0:
                 # andere richting bij bereiken van grenswaarde
-                teacher_move[i] = 1
+                teacher_move[i] = 2
                 # opschuiven naar rechts anders komen we in oneindige loop
                 teacherlist[i].rect.left = 1
                 # laten zakken bij grenzen
                 teacherlist[i].rect.y += 80
-            elif teacherlist[i].rect.right >= 1000:
+            elif teacherlist[i].rect.right >= width:
                 # andere richting bij bereiken van grenswaarde
-                teacher_move[i] = -1
+                teacher_move[i] = -2
                 # opschuiven naar links anders komen we in oneindige loop
                 teacherlist[i].rect.right = 999
                 # laten zakken bij grenzen
@@ -198,7 +198,7 @@ def main():
 
             # aanraking van het boek met een van de leraren
             if teacherlist[i].rect.collidepoint(book.rect.center):
-                teacherlist[i].rect.center = (random.randint(0, 1000), 50)
+                teacherlist[i].rect.center = (random.randint(0, width), 50)
                 score_count += 1
                 book_state = "ready"
 
